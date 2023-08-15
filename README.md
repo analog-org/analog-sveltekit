@@ -1,6 +1,6 @@
 <p align="center">
   <a href="#">
-    <h1 align="center">Analog-TSX</h1>
+    <h1 align="center">Analog-svelte</h1>
   </a>
 </p>
 
@@ -44,8 +44,8 @@
 # Getting Started 
 ## Initial Setup
 ```sh
-git clone https://github.com/analog-org/analog-tsx.git
-cd analog-tsx
+git clone https://github.com/analog-org/analog-svelte.git
+cd analog-svelte
 npm i
 ```
 ## ENV Variables
