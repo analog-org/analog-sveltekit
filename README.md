@@ -6,26 +6,26 @@
 
 <div align="center">
   
-  This is a typescript template for building Discord bots with a dashboard. It uses NextJS, TailwindCSS, Discord.JS, Sapphire, Next-Auth, and Prisma.
+  This is a typescript template for building Discord bots with a dashboard. It uses NextJS, TailwindCSS, Discord.JS, Sapphire, Authy, and Prisma.
   
   <br />
 </div>
 <div align="center">
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white">
   <img src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white">
-  <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white">
+  <img src="https://img.shields.io/badge/SvelteKit-FF3E00?style=for-the-badge&logo=Svelte&logoColor=white">
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
   <img src="https://img.shields.io/badge/Turbo-Repo-blueviolet.svg?style=for-the-badge&logo=turborepo&labelColor=000000&logoWidth=20&logoColor=white">
 </div>
 
 <div align="center">
   <img alt="npm" src="https://img.shields.io/npm/v/discord.js?label=D.JS&style=flat-square">
-  <img alt="npm" src="https://img.shields.io/npm/v/next?label=next&style=flat-square">
+  <img alt="npm" src="https://img.shields.io/npm/v/@sveltejs/kit?label=@sveltejs/kit&style=flat-square">
   <img alt="npm" src="https://img.shields.io/npm/v/next-auth?label=next-auth&style=flat-square">
   <img alt="npm" src="https://img.shields.io/npm/v/turbo?label=Turbo&style=flat-square">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/analog-org/analog-tsx?style=flat-square">
-  <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/analog-org/analog-tsx?style=flat-square">
-  <img alt="GitHub issues" src="https://img.shields.io/github/issues/analog-org/analog-tsx?style=flat-square">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/analog-org/analog-svelte?style=flat-square">
+  <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/analog-org/analog-svelte?style=flat-square">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/analog-org/analog-svelte?style=flat-square">
 </div>
 
 <div align="center">
@@ -36,7 +36,7 @@
 -  Uses [the Sapphire Framework](https://www.sapphirejs.dev/)
 
 # Dashboard features
-- NextJS
+- SvelteKit
 - Typescript
 - [Authjs](https://authjs.dev/) - For easy authentication
 - TailwindCSS
