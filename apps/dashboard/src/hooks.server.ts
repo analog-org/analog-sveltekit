@@ -1,6 +1,8 @@
 import { SvelteKitAuth } from "@auth/sveltekit";
-import Discord from "@auth/core/providers/discord";
+import Discord, { type DiscordProfile } from "@auth/core/providers/discord";
 import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, NEXTAUTH_SECRET, NEXTAUTH_URL } from "$env/static/private";
+
+
 
 export const handle = SvelteKitAuth({
   providers: [
