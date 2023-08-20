@@ -1,11 +1,12 @@
 import { SvelteKitAuth } from "@auth/sveltekit";
 import Discord from "@auth/core/providers/discord";
+import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, NEXTAUTH_SECRET, NEXTAUTH_URL } from "$env/static/private";
 
 export const handle = SvelteKitAuth({
   providers: [
     Discord({
-      clientId: process.env.DISCORD_CLIENT_ID,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET,
+      clientId: DISCORD_CLIENT_ID,
+      clientSecret: DISCORD_CLIENT_SECRET,
       authorization: {
         params: {
           scope: "identify guilds email connections",
@@ -57,5 +58,5 @@ export const handle = SvelteKitAuth({
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: NEXTAUTH_SECRET,
 });

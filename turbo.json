@@ -1,5 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDotEnv": [".env"],
+  "globalEnv": ["DISCORD_CLIENT_ID", "DISCORD_CLIENT_SECRET", "PUBLIC_DISCORD_CLIENT_ID", "DISCORD_TOKEN", "NEXTAUTH_SECRET", "NEXTAUTH_URL"],
   "pipeline": {
     "db:generate": {
       "cache": false
@@ -9,12 +11,7 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
-    },
-    "dashboard#build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"],
-      "env": ["DISCORD_CLIENT_ID", "DISCORD_CLIENT_SECRET", "NEXT_PUBLIC_DISCORD_CLIENT_ID", "DISCORD_TOKEN", "NEXTAUTH_SECRET", "NEXTAUTH_URL"]
+      "outputs": ["vercel/**", ".svelte-kit/**"]
     },
     "lint": {
       "outputs": []
