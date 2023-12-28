@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { LayoutData } from './$types';
     import "../app.css"
-    import "../components/sidebar.svelte"
+    import "$lib/components/sidebar.svelte"
     export let data: LayoutData;
 </script>
 
