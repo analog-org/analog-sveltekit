@@ -9,7 +9,7 @@
     <p>You're signed in</p>
     <button on:click={signOut}>Sign out</button>
   {:else}
-    <p>You need to sign in</p>
+    <p class="">You need to sign in</p>
     <button on:click={signIn}>Sign in</button>
   {/if}
 </p>
