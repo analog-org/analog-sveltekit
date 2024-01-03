@@ -6,7 +6,9 @@ import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, DISCORD_BOT_TOKEN} from "$env
 
 export const load: LayoutServerLoad = async (event) => {
   const currentSession = await event.locals.getSession();
-  
+  const botRest = new REST({authPrefix: 'Bot'}).setToken(DISCORD_BOT_TOKEN);
+  const botInfo = await botRest.get(Routes.user('@me'));
+
   if (currentSession) {
     //@ts-ignore
     const accessToken = currentSession.accessToken;
@@ -14,20 +16,19 @@ export const load: LayoutServerLoad = async (event) => {
     const discordUser: APIUser = currentSession.discordUser;
 
     const userRest = new REST({authPrefix: 'Bearer'}).setToken(accessToken);
-    const botRest = new REST({authPrefix: 'Bot'}).setToken(DISCORD_BOT_TOKEN);
 
     const userInfo = await userRest.get(Routes.user('@me'));
     
-    const botInfo = await botRest.get(Routes.user('@me'));
+    
 
     return {
       session: currentSession,
       user: userInfo,
-      bot: botInfo,
+      
     }
   }
 
   return {
-    session: currentSession,
+    session: currentSession,bot: botInfo,
   }
 }
