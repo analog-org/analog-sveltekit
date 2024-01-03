@@ -1353,6 +1353,7 @@ damerau-levenshtein@^1.0.8:
   dependencies:
     "@auth/core" "^0.19.0"
     "@auth/sveltekit" "^0.5.0"
+    "@discordjs/rest" "^2.2.0"
     bits-ui "^0.11.8"
     clsx "^2.0.0"
     discord-api-types "^0.37.67"
@@ -2476,6 +2477,11 @@ mkdirp@^0.5.1:
 
 mkdirp@^1.0.3:
   version "1.0.4"
+
+mode-watcher@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/mode-watcher/-/mode-watcher-0.1.2.tgz"
+  integrity sha512-XTdPCdqC3kqSvB+Q262Kor983YJkkB2Z3vj9uqg5IqKQpOdiz+xB99Jihp8sWbyM67drC7KKp0Nt5FzCypZi2g==
 
 mri@^1.1.0:
   version "1.2.0"

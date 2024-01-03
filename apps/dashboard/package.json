@@ -37,6 +37,7 @@
 		"discord-api-types": "^0.37.67",
 		"discord.js": "^14.14.1",
 		"lucide-svelte": "^0.303.0",
+		"mode-watcher": "^0.1.2",
 		"tailwind-merge": "^2.2.0",
 		"tailwind-variants": "^0.1.19"
 	}
