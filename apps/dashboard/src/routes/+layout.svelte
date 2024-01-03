@@ -6,8 +6,10 @@
     export let data: LayoutData;
     import { type APIUser } from 'discord-api-types/v10'
     import { page } from "$app/stores"
+    import { ModeWatcher } from "mode-watcher";
 </script>
 
+<ModeWatcher />
 <Navbar bot={$page.data.bot}>
     <slot name="navbar"></slot> 
 </Navbar>
