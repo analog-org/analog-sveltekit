@@ -61,7 +61,6 @@ export const load: LayoutServerLoad = async (event) => {
       user: userInfo,
       bot: botInfo,
       botColor: botAccent,
-      botGuilds: botGuilds,
       userGuilds: adminGuilds,
       mutualGuilds: mutualGuilds,
     };
@@ -71,6 +70,5 @@ export const load: LayoutServerLoad = async (event) => {
     session: currentSession,
     bot: botInfo,
     botColor: botAccent,
-    botGuilds: botGuilds,
   };
 };
