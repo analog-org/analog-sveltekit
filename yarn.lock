@@ -989,7 +989,7 @@ ajv@^8.0.1:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-"analog@file:C:\\Users\\BossDaily\\Documents\\Repos\\DiscordBots\\Typescript\\analog-svelte\\apps\\bot":
+"analog@file:C:\\Users\\gboys\\Documents\\Repos\\Analog\\analog-svelte\\apps\\bot":
   version "1.0.0"
   resolved "file:apps/bot"
   dependencies:
@@ -1352,7 +1352,7 @@ cssesc@^3.0.0:
 damerau-levenshtein@^1.0.8:
   version "1.0.8"
 
-"dashboard@file:C:\\Users\\BossDaily\\Documents\\Repos\\DiscordBots\\Typescript\\analog-svelte\\apps\\dashboard":
+"dashboard@file:C:\\Users\\gboys\\Documents\\Repos\\Analog\\analog-svelte\\apps\\dashboard":
   version "0.0.1"
   resolved "file:apps/dashboard"
   dependencies:
@@ -1368,7 +1368,7 @@ damerau-levenshtein@^1.0.8:
     tailwind-merge "^2.2.0"
     tailwind-variants "^0.1.19"
 
-"database@file:C:\\Users\\BossDaily\\Documents\\Repos\\DiscordBots\\Typescript\\analog-svelte\\packages\\database":
+"database@file:C:\\Users\\gboys\\Documents\\Repos\\Analog\\analog-svelte\\packages\\database":
   resolved "file:packages/database"
   dependencies:
     "@prisma/client" latest
@@ -1625,7 +1625,7 @@ escape-string-regexp@^1.0.5:
 escape-string-regexp@^4.0.0:
   version "4.0.0"
 
-"eslint-config-custom@file:C:\\Users\\BossDaily\\Documents\\Repos\\DiscordBots\\Typescript\\analog-svelte\\packages\\eslint-config-custom":
+eslint-config-custom@*, "eslint-config-custom@file:C:\\Users\\gboys\\Documents\\Repos\\Analog\\analog-svelte\\packages\\eslint-config-custom":
   version "0.0.0"
   resolved "file:packages/eslint-config-custom"
   dependencies:
@@ -1766,7 +1766,7 @@ eslint-visitor-keys@^2.0.0:
 eslint-visitor-keys@^3.3.0:
   version "3.3.0"
 
-eslint@*, "eslint@^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8", "eslint@^3 || ^4 || ^5 || ^6 || ^7 || ^8", "eslint@^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0", "eslint@^6.0.0 || ^7.0.0 || ^8.0.0", eslint@^7.23.0, "eslint@^7.23.0 || ^8.0.0", eslint@>=7.0.0, eslint@>6.6.0:
+eslint@*, "eslint@^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8", "eslint@^3 || ^4 || ^5 || ^6 || ^7 || ^8", "eslint@^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0", "eslint@^6.0.0 || ^7.0.0 || ^8.0.0", eslint@^7.23.0, "eslint@^7.23.0 || ^8.0.0", eslint@^7.32.0, eslint@>=7.0.0, eslint@>6.6.0:
   version "7.32.0"
   dependencies:
     "@babel/code-frame" "7.12.11"
@@ -3545,7 +3545,7 @@ tsconfig-paths@^3.14.1:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-"tsconfig@file:C:\\Users\\BossDaily\\Documents\\Repos\\DiscordBots\\Typescript\\analog-svelte\\packages\\tsconfig":
+tsconfig@*, "tsconfig@file:C:\\Users\\gboys\\Documents\\Repos\\Analog\\analog-svelte\\packages\\tsconfig":
   version "0.0.0"
   resolved "file:packages/tsconfig"
 
@@ -3587,7 +3587,7 @@ type-check@^0.4.0, type-check@~0.4.0:
 type-fest@^0.20.2:
   version "0.20.2"
 
-typescript@*, typescript@^4.7.4, typescript@>=2.7, "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta", typescript@>=3.3.1, "typescript@>=3.9.5 || ^4.0.0 || ^5.0.0":
+typescript@*, typescript@^4.5.2, typescript@^4.7.4, typescript@>=2.7, "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta", typescript@>=3.3.1, "typescript@>=3.9.5 || ^4.0.0 || ^5.0.0":
   version "4.9.5"
 
 typescript@^5.0.0:
