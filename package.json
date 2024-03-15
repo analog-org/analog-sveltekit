@@ -13,17 +13,17 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "discord-api-types": "^0.37.67",
+    "discord-api-types": "^0.37.74",
     "eslint-config-custom": "*",
     "prettier": "latest",
-    "turbo": "1.11.2"
+    "turbo": "1.12.5"
   },
   "engines": {
     "node": ">=14.0.0"
   },
   "packageManager": "npm@8.19.2",
   "dependencies": {
-    "dotenv-cli": "^7.3.0",
-    "prisma": "^5.7.1"
+    "dotenv-cli": "^7.4.1",
+    "prisma": "^5.11.0"
   }
 }
