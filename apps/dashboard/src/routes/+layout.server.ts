@@ -41,7 +41,7 @@ export const load: LayoutServerLoad = async (event) => {
       .get(Routes.userGuilds())
       .then((res) => res as APIGuild[]);
     const adminGuilds = userGuilds
-      .map((guild) => {
+      .filter((guild) => {
         const p: bigint = BigInt(!guild?.permissions);
         const PermissionsBitField = new BitField(
           enumToObject(PermissionFlagsBits)
