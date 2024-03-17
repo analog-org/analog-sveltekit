@@ -13,10 +13,10 @@
     class="flex flex-col gap-8 rounded-xl sm:grid sm:grid-cols-2 sm:grid-row lg:grid-cols-3"
   >
     {#each data?.mutualGuilds || [] as guild (guild?.id)}
-      <Guildcard {guild} guildSetup={true} user={data?.user} />
+      <Guildcard {guild} guildSetup={true} />
     {/each}
     {#each data?.joinAbleGuilds || [] as guild (guild?.id)}
-      <Guildcard {guild} guildSetup={false} user={data?.user} />
+      <Guildcard {guild} guildSetup={false} />
     {/each}
   </div>
 </div>

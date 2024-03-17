@@ -8,9 +8,9 @@
 
   export let guild: APIGuild; // This is the guild object from discord.js
   export let guildSetup: boolean;
-  export let user: APIUser | undefined;
 
   const bot = $page.data.bot as APIUser;
+  const user = $page.data.user as APIUser;
   
   let guildId = guild.id;
   let guildIcon = guild.icon;
