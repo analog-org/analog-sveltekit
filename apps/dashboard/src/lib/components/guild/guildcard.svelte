@@ -7,7 +7,7 @@
   import { page } from "$app/stores";
   import * as Card from "$lib/components/ui/card";
 
-  export let guild: APIGuild; 
+  export let guild: APIGuild;
   export let guildSetup: boolean;
 
   const bot = $page.data.bot as APIUser;
@@ -42,9 +42,7 @@
   </Card.Header>
   <Card.Content>
     <div class="flex flex-row justify-between">
-      <h1
-        class="text-white flex-none font-helvetica font-bold text-xl px-2 pb-2"
-      >
+      <h1 class=" flex-none font-helvetica font-bold text-xl px-2 pb-2">
         {guildName}
       </h1>
       <div class="flex-none">
