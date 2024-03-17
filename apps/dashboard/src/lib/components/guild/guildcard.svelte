@@ -32,7 +32,7 @@
 <Card.Root>
   <Card.Header>
     <div>
-      <div class="flex items-center justify-center relative">
+      <div class="flex items-center justify-center relative h-52">
         <GuildIconLG {guildIcon} {guildId} {userDiscriminator} />
         <div class="absolute">
           <GuildIcon {guildIcon} {guildId} {userDiscriminator} />
