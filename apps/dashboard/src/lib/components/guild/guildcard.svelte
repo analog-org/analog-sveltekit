@@ -1,19 +1,17 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { PageData } from "./$types";
   import GuildIcon from './guildicon.svelte';
   import GuildIconLG from './guildiconlarge.svelte';
-  import type { APIGuild } from 'discord-api-types/v10';
+  import type { APIGuild, APIUser } from 'discord-api-types/v10';
 
-  
   export let guild: APIGuild; // This is the guild object from discord.js
+  export let guildSetup: boolean;
+  export let user: APIUser | undefined;
+
   let guildId = guild.id;
   let guildIcon = guild.icon;
   let guildName = guild.name;
-  export let guildSetup: boolean;
-
-  let data: PageData;
-  let userDiscriminator = data.user.discriminator;
+  let userDiscriminator = user?.discriminator;
 
   let link: string;
 
