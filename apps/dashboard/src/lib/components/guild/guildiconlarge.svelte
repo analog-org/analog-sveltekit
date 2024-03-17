@@ -1,7 +1,7 @@
 <script lang="ts">
   export let guildId: string;
   export let guildIcon: string | null;
-  export let userDiscriminator: number;
+  export let userDiscriminator: string;
 </script>
 
 {#if guildIcon}
@@ -13,7 +13,7 @@
   />
 {:else}
   <img 
-    src={`https://cdn.discordapp.com/embed/avatars/${userDiscriminator % 5}.png`} 
+    src={`https://cdn.discordapp.com/embed/avatars/${Number(userDiscriminator) % 5}.png`} 
     class="blur-md" 
     alt="Default Guild Icon" 
     style="object-fit: cover; width: 100%; height: 100%;" 
