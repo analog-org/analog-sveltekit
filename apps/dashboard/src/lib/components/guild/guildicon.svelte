@@ -1,6 +1,6 @@
 <script lang="ts">
   export let guildId: string;
-  export let guildIcon: string;
+  export let guildIcon: string | null;
   export let userDiscriminator: string;
 </script>
 
