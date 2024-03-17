@@ -5,13 +5,14 @@
   import type { APIGuild, APIUser } from "discord-api-types/v10";
   import { Button } from "$lib/components/ui/button/index.js";
   import { page } from "$app/stores";
+  import * as Card from "$lib/components/ui/card";
 
   export let guild: APIGuild; // This is the guild object from discord.js
   export let guildSetup: boolean;
 
   const bot = $page.data.bot as APIUser;
   const user = $page.data.user as APIUser;
-  
+
   let guildId = guild.id;
   let guildIcon = guild.icon;
   let guildName = guild.name;
@@ -28,7 +29,7 @@
   });
 </script>
 
-<div class="h-56 flex gap-4 flex-col w-72 sm:w-80 bg-black rounded-xl relative">
+<!-- <div class="h-56 flex gap-4 flex-col w-72 sm:w-80 bg-black rounded-xl relative">
   <div
     class="py-2 pl-2 relative items-center justify-end overflow-hidden w-full h-full rounded-xl"
   >
@@ -37,7 +38,7 @@
   <span class="absolute top-9 left-28 items-center justify-center">
     <GuildIcon {guildIcon} {guildId} {userDiscriminator} />
   </span>
-  <div class="flex flex-row justify-start">
+  <div class="flex flex-row justify-between">
     <h1 class="text-white flex-none font-helvetica font-bold text-xl px-2 pb-2">
       {guildName}
     </h1>
@@ -45,4 +46,29 @@
       <Button href={link}>{guildSetup ? "Manage" : "Invite"}</Button>
     </div>
   </div>
-</div>
+</div> -->
+
+<Card.Root class="">
+  <Card.Header>
+    <div>
+      <div class="flex items-center justify-center relative">
+        <GuildIconLG {guildIcon} {guildId} {userDiscriminator} />
+        <div class="absolute">
+          <GuildIcon {guildIcon} {guildId} {userDiscriminator} />
+        </div>
+      </div>
+    </div>
+  </Card.Header>
+  <Card.Content>
+    <div class="flex flex-row justify-between">
+      <h1
+        class="text-white flex-none font-helvetica font-bold text-xl px-2 pb-2"
+      >
+        {guildName}
+      </h1>
+      <div class="flex-none">
+        <Button href={link}>{guildSetup ? "Manage" : "Invite"}</Button>
+      </div>
+    </div>
+  </Card.Content>
+</Card.Root>
