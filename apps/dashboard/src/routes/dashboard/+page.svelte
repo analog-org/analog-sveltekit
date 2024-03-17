@@ -23,12 +23,14 @@
   {/each}
   {#each data?.joinAbleGuilds || [] as guild (guild?.id)}
     <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6">
-      <Avatar.Root>
-        <Avatar.Image
-          src={`https://cdn.discordapp.com/icons/${guild?.id}/${guild?.icon}.png`}
-        />
-        <Avatar.Fallback>{guild?.name[0]}{guild?.name[1]}</Avatar.Fallback>
-      </Avatar.Root>
+      <a href={`https://discord.com/oauth2/authorize?client_id=${data?.bot.id}&permissions=8&scope=bot+applications.commands&guild_id=${guild.id}&disable_guild_select=true`}>
+        <Avatar.Root>
+          <Avatar.Image
+            src={`https://cdn.discordapp.com/icons/${guild?.id}/${guild?.icon}.png`}
+          />
+          <Avatar.Fallback>{guild?.name[0]}{guild?.name[1]}</Avatar.Fallback>
+        </Avatar.Root>
+      </a>
     </div>
   {/each}
 </div>
