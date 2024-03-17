@@ -40,6 +40,8 @@ export const load: LayoutServerLoad = async (event) => {
     const userGuilds = await userRest
       .get(Routes.userGuilds())
       .then((res) => res as APIGuild[]);
+
+      
     const adminGuilds = userGuilds
       .filter((guild) => {
         const p: bigint = BigInt(!guild?.permissions);
@@ -56,6 +58,11 @@ export const load: LayoutServerLoad = async (event) => {
       return botGuilds.some((botGuild) => botGuild.id === guild?.id);
     });
 
+    const joinAbleGuilds = adminGuilds.filter((guild) => {
+      return !botGuilds.some((botGuild) => botGuild.id === guild?.id);
+    });
+
+
     return {
       session: currentSession,
       user: userInfo,
@@ -63,6 +70,7 @@ export const load: LayoutServerLoad = async (event) => {
       botColor: botAccent,
       userGuilds: adminGuilds,
       mutualGuilds: mutualGuilds,
+      joinAbleGuilds: joinAbleGuilds,
     };
   }
 
