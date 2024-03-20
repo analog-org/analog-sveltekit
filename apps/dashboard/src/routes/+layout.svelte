@@ -14,8 +14,7 @@
 </svelte:head>
 
 <ModeWatcher />
-<Navbar>
-    <slot name="navbar"></slot> 
-</Navbar>
+<Navbar />
+
 
 <slot></slot>
