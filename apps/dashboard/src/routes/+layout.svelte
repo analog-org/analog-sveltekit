@@ -10,11 +10,11 @@
     const bot = $page.data.bot as APIUser;
 </script>
 <svelte:head>
-    <link rel="icon" type="image/png" href={`https://cdn.discordapp.com/avatars/${bot.id}/${bot.avatar}.png?size=1024&format=webp&quality=lossless&width=0&height=256`} class="" />
+    <link rel="icon" type="image/png" href={`https://cdn.discordapp.com/avatars/${bot.id}/${bot.avatar}.png?size=1024&format=webp&quality=lossless&width=0&height=256`} class="border-orange-600 border-4" />
 </svelte:head>
 
 <ModeWatcher />
-<Navbar bot={bot}>
+<Navbar>
     <slot name="navbar"></slot> 
 </Navbar>
 
