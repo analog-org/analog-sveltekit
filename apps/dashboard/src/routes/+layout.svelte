@@ -16,5 +16,4 @@
 <ModeWatcher />
 <Navbar />
 
-
 <slot></slot>
