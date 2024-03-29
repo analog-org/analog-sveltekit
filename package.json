@@ -13,10 +13,10 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "discord-api-types": "^0.37.74",
+    "discord-api-types": "^0.37.77",
     "eslint-config-custom": "*",
     "prettier": "latest",
-    "turbo": "1.12.5"
+    "turbo": "1.13.0"
   },
   "engines": {
     "node": ">=14.0.0"

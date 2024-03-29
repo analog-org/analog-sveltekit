@@ -1373,13 +1373,13 @@ damerau-levenshtein@^1.0.8:
     "@auth/core" "^0.28.0"
     "@auth/sveltekit" "^0.14.0"
     "@discordjs/rest" "^2.2.0"
-    bits-ui "^0.19.7"
+    bits-ui "^0.20.0"
     clsx "^2.1.0"
-    discord-api-types "^0.37.74"
+    discord-api-types "^0.37.75"
     discord.js "^14.14.1"
-    lucide-svelte "^0.358.0"
+    lucide-svelte "^0.359.0"
     mode-watcher "^0.3.0"
-    tailwind-merge "^2.2.1"
+    tailwind-merge "^2.2.2"
     tailwind-variants "^0.2.1"
 
 "database@file:C:\\Users\\gboys\\Documents\\Repos\\Analog\\analog-svelte\\packages\\database":
@@ -1437,10 +1437,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-discord-api-types@^0.37.73, discord-api-types@^0.37.74, discord-api-types@^0.37.75:
-  version "0.37.75"
-  resolved "https://registry.npmjs.org/discord-api-types/-/discord-api-types-0.37.75.tgz"
-  integrity sha512-pnb2iPp63+TqSs+3MCzl47y0CFQYjDDQBmuiCs0LkLoRdFx2dDpjrzJYC7BcHJCa/Xlpf+/JuDT/YADvQLu3yQ==
+discord-api-types@^0.37.73, discord-api-types@^0.37.75, discord-api-types@^0.37.77:
+  version "0.37.77"
+  resolved "https://registry.npmjs.org/discord-api-types/-/discord-api-types-0.37.77.tgz"
+  integrity sha512-AkEn9nZA5w/XJ8wzKzlpx3X+MToQCowKahftF1+KYnMWnuglCrVRojy1XlIWX8Frgp1v8INceGKpvDkbvMLJ4g==
 
 discord-api-types@0.37.61:
   version "0.37.61"
@@ -1643,7 +1643,7 @@ escape-string-regexp@^1.0.5:
 escape-string-regexp@^4.0.0:
   version "4.0.0"
 
-"eslint-config-custom@file:C:\\Users\\gboys\\Documents\\Repos\\Analog\\analog-svelte\\packages\\eslint-config-custom":
+eslint-config-custom@*, "eslint-config-custom@file:C:\\Users\\gboys\\Documents\\Repos\\Analog\\analog-svelte\\packages\\eslint-config-custom":
   version "0.0.0"
   resolved "file:packages/eslint-config-custom"
   dependencies:
@@ -1784,7 +1784,7 @@ eslint-visitor-keys@^2.0.0:
 eslint-visitor-keys@^3.3.0:
   version "3.3.0"
 
-eslint@*, "eslint@^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8", "eslint@^3 || ^4 || ^5 || ^6 || ^7 || ^8", "eslint@^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0", "eslint@^6.0.0 || ^7.0.0 || ^8.0.0", eslint@^7.23.0, "eslint@^7.23.0 || ^8.0.0", eslint@>=7.0.0, eslint@>6.6.0:
+eslint@*, "eslint@^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8", "eslint@^3 || ^4 || ^5 || ^6 || ^7 || ^8", "eslint@^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0", "eslint@^6.0.0 || ^7.0.0 || ^8.0.0", eslint@^7.23.0, "eslint@^7.23.0 || ^8.0.0", eslint@^7.32.0, eslint@>=7.0.0, eslint@>6.6.0:
   version "7.32.0"
   dependencies:
     "@babel/code-frame" "7.12.11"
@@ -3567,7 +3567,7 @@ tsconfig-paths@^3.14.1:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-"tsconfig@file:C:\\Users\\gboys\\Documents\\Repos\\Analog\\analog-svelte\\packages\\tsconfig":
+tsconfig@*, "tsconfig@file:C:\\Users\\gboys\\Documents\\Repos\\Analog\\analog-svelte\\packages\\tsconfig":
   version "0.0.0"
   resolved "file:packages/tsconfig"
 
@@ -3584,22 +3584,22 @@ tsutils@^3.21.0:
   dependencies:
     tslib "^1.8.1"
 
-turbo-windows-64@1.12.5:
-  version "1.12.5"
-  resolved "https://registry.npmjs.org/turbo-windows-64/-/turbo-windows-64-1.12.5.tgz"
-  integrity sha512-gQYbOhZg5Ww0bQ/bC0w/4W6yQRwBumUUnkB+QPo15VznwxZe2a7bo6JM+9Xy9dKLa/kn+p7zTqme4OEp6M3/Yg==
+turbo-windows-64@1.13.0:
+  version "1.13.0"
+  resolved "https://registry.npmjs.org/turbo-windows-64/-/turbo-windows-64-1.13.0.tgz"
+  integrity sha512-hJgSZJZwlWHNwLEthaqJqJWGm4NqF5X/I7vE0sPE4i/jeDl8f0n1hcOkgJkJiNXVxhj+qy/9+4dzbPLKT9imaQ==
 
-turbo@1.12.5:
-  version "1.12.5"
-  resolved "https://registry.npmjs.org/turbo/-/turbo-1.12.5.tgz"
-  integrity sha512-FATU5EnhrYG8RvQJYFJnDd18DpccDjyvd53hggw9T9JEg9BhWtIEoeaKtBjYbpXwOVrJQMDdXcIB4f2nD3QPPg==
+turbo@1.13.0:
+  version "1.13.0"
+  resolved "https://registry.npmjs.org/turbo/-/turbo-1.13.0.tgz"
+  integrity sha512-r02GtNmkOPcQvUzVE6lg474QVLyU02r3yh3lUGqrFHf5h5ZEjgDGWILsAUqplVqjri1Y/oOkTssks4CObTAaiw==
   optionalDependencies:
-    turbo-darwin-64 "1.12.5"
-    turbo-darwin-arm64 "1.12.5"
-    turbo-linux-64 "1.12.5"
-    turbo-linux-arm64 "1.12.5"
-    turbo-windows-64 "1.12.5"
-    turbo-windows-arm64 "1.12.5"
+    turbo-darwin-64 "1.13.0"
+    turbo-darwin-arm64 "1.13.0"
+    turbo-linux-64 "1.13.0"
+    turbo-linux-arm64 "1.13.0"
+    turbo-windows-64 "1.13.0"
+    turbo-windows-arm64 "1.13.0"
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
@@ -3609,7 +3609,7 @@ type-check@^0.4.0, type-check@~0.4.0:
 type-fest@^0.20.2:
   version "0.20.2"
 
-typescript@*, typescript@^4.7.4, typescript@>=2.7, "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta", typescript@>=3.3.1, "typescript@>=3.9.5 || ^4.0.0 || ^5.0.0":
+typescript@*, typescript@^4.5.2, typescript@^4.7.4, typescript@>=2.7, "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta", typescript@>=3.3.1, "typescript@>=3.9.5 || ^4.0.0 || ^5.0.0":
   version "4.9.5"
 
 typescript@^5.0.3:
