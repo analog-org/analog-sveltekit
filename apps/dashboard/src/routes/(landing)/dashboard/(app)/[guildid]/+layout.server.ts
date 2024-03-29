@@ -13,15 +13,13 @@ import { PermissionFlagsBits } from "discord-api-types/v10";
 import { BitField, enumToObject } from "@sapphire/bitfield";
 import { loadUserInfo } from "$lib/utils";
 
-
 export const load: LayoutServerLoad = async ({ locals, params }) => {
   const guildId = params.guildid;
-  const userInfo = await loadUserInfo({ locals }, DISCORD_TOKEN)
+  const userInfo = await loadUserInfo({ locals }, DISCORD_TOKEN);
   const mutualGuilds = userInfo?.mutualGuilds;
-   if (!mutualGuilds?.some((guild: APIGuild) => guild.id === guildId))
-    throw redirect(303, "/dashboard");  
+  if (!mutualGuilds?.some((guild: APIGuild) => guild.id === guildId))
+    throw redirect(303, "/dashboard");
 
-  console.log(mutualGuilds)
-  const guild = mutualGuilds?.find((guild: APIGuild) => guild.id === guildId); 
-  return userInfo;
+  const guild = mutualGuilds?.find((guild: APIGuild) => guild.id === guildId);
+  return { userInfo, guild };
 };

@@ -1,5 +1,5 @@
 import { REST } from "@discordjs/rest";
-import type { LayoutServerLoad } from "./$types";
+import type { LayoutServerLoad } from "./(landing)/$types";
 import { Routes, type APIUser, type APIGuild } from "discord-api-types/v10";
 import Vibrant from "node-vibrant";
 import {

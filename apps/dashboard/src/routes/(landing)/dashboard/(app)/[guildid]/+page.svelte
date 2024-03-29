@@ -3,13 +3,12 @@
   import * as Card from "$lib/components/ui/card";
 
   export let data: PageData;
-  // const guild = data?.guild;
-  // console.log(guild)
+  const guild = data?.guild;
 </script>
 
 <div class="flex justify-center items-center min-h-screen">
   hi
-  <!-- <Card.Root>
+<Card.Root>
     <Card.Header>
         <img 
         src={`https://cdn.discordapp.com/icons/${guild?.id}/${guild?.icon}.png`} 
@@ -26,5 +25,5 @@
     <Card.Footer>
       <p>{guild?.features}</p>
     </Card.Footer>
-  </Card.Root> -->
+  </Card.Root>  
 </div>
