@@ -1,7 +1,5 @@
 <script lang="ts">
     import type { LayoutData } from './$types';
-    import { NavbarMenu, HoveredLink, MenuItem, ProductItem } from '$lib/components/ui/NavbarMenu'
-    let active: string | null = null;
 
     export let data: LayoutData;
 </script>
