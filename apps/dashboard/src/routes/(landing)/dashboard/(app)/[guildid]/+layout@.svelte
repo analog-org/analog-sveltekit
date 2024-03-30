@@ -55,6 +55,5 @@
 			</MenuItem>
 		</NavbarMenu>
 	</div>
-	<p class="text-black dark:text-white">The Navbar will show on top of the page</p>
 </div>
 <slot></slot>
