@@ -4,18 +4,14 @@
   import Vibrant from "node-vibrant";
   const data = $page.data;
   const guild = data.guild as APIGuild;
-
-  const guildIcon = `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;
+  const guildIcon = data.guildIcon;
+  const guildAccent = data.guildAccent;
   
-  const guildAccent = await Vibrant.from(guildIcon)
-    .getPalette()
-    .then((palette) => palette.Vibrant?.hex);
 
-  console.log(guildAccent);
 </script>
 
 <div
-  class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2.5 px-2.5 rounded-xl"
+  class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2.5 px-2.5 rounded-xl"
 >
   <img
     src={guildIcon}
