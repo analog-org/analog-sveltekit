@@ -1397,6 +1397,7 @@ damerau-levenshtein@^1.0.8:
     discord.js "^14.14.1"
     lucide-svelte "^0.363.0"
     mode-watcher "^0.3.0"
+    svelte-motion "^0.12.2"
     tailwind-merge "^2.2.2"
     tailwind-variants "^0.2.1"
 
