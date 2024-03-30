@@ -20,6 +20,13 @@ export const load: LayoutServerLoad = async ({ locals, params }) => {
   if (!mutualGuilds?.some((guild: APIGuild) => guild.id === guildId))
     throw redirect(303, "/dashboard");
 
-  const guild = mutualGuilds?.find((guild: APIGuild) => guild.id === guildId);
-  return { userInfo, guild };
+  const botRest = new REST({ authPrefix: "Bot" }).setToken(DISCORD_TOKEN);
+
+  const guild = await botRest.get(Routes.guild(guildId)).then((res) => res as APIGuild);
+  const guildIcon = `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;
+  
+  const guildAccent = await Vibrant.from(guildIcon)
+    .getPalette()
+    .then((palette) => palette.Vibrant?.hex);
+  return { userInfo, guild, guildIcon, guildAccent };
 };
