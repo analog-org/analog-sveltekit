@@ -19,7 +19,7 @@
     style="box-shadow: 0 0 20px {guildAccent}, 0 0 5px {guildAccent};"
     alt={guild.name}
   />
-  <p class="flex-grow-0 flex-shrink-0 text-2xl font-bold text-left text-white">
+  <p class="flex-grow-0 flex-shrink-0 text-2xl font-bold text-left dark:text-white text-neutral-900">
     {guild.name}
   </p>
 </div>
