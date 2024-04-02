@@ -38,7 +38,7 @@
   class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]"
 >
   <div class="hidden border-r bg-muted/40 md:block">
-    <div class="flex h-full max-h-screen flex-col gap-2">
+    <div class="flex h-full max-h-screen flex-col gap-2 sticky top-0">
       <div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
         <a href="/" class="flex items-center gap-2 font-semibold">
           <img class="h-6 w-6 rounded-full" src={`https://cdn.discordapp.com/avatars/${data?.bot?.id}/${data?.bot?.avatar}.png?size=1024&format=webp&quality=lossless&width=0&height=256`} alt={data?.bot?.username}/>
@@ -60,11 +60,6 @@
           >
             <ShoppingCart class="h-4 w-4" />
             Orders
-            <Badge
-              class="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-            >
-              6
-            </Badge>
           </a>
           <a
             href="##"
