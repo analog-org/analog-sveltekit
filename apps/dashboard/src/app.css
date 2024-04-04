@@ -81,3 +81,13 @@
   font-family: 'LucideIcons';
   src: url(https://unpkg.com/lucide-static@latest/font/Lucide.ttf) format('truetype');
 }
+
+.lucide-icon {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
