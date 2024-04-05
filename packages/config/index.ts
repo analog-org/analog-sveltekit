@@ -2,10 +2,24 @@ export const config = {
   website: {
     category: [
       // icons list: https://lucide.dev/icons
-      // the name has to match the page path
       // everything in the default path will not have a dropdown menu
-      { name: "Default", pages: [{ name: "home", icon: "home" }] },
-      { name: "Moderation", pages: [{ name: "embed", icon: "layers" }] },
+      {
+        name: "Default",
+        pages: [
+          { name: "dashboard", icon: "home", path: "" },
+          { name: "embed sender", icon: "layout-template", path: "embed" },
+          { name: "settings", icon: "settings", path: "embed" },
+        ],
+      },
+      {
+        name: "Moderation",
+        pages: [
+          { name: "auto mod", icon: "bot", path: "auto-mod" },
+          { name: "mod logs", icon: "scroll", path: "mod-logs" },
+          { name: "bans", icon: "gravel", path: "bans" },
+          { name: "mutes", icon: "message-circle-off", path: "mute" },
+        ],
+      },
     ],
   },
 };
