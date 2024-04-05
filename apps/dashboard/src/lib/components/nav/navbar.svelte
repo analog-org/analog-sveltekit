@@ -25,7 +25,7 @@
   const botAccent = $page.data.botColor as string;
 </script>
 
-<Navbar>
+<Navbar class="!bg-muted/40">
   <NavBrand href="/">
     <img
       src={`https://cdn.discordapp.com/avatars/${bot.id}/${bot.avatar}.png?size=1024&format=webp&quality=lossless&width=0&height=256`}
