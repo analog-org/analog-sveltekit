@@ -6,18 +6,18 @@ export const config = {
       {
         name: "Default",
         pages: [
-          { name: "dashboard", icon: "home", path: "" },
-          { name: "embed sender", icon: "layout-template", path: "embed" },
-          { name: "settings", icon: "settings", path: "embed" },
+          { name: "Dashboard", icon: "home", path: "" },
+          { name: "Embed Sender", icon: "layout-template", path: "/embed" },
+          { name: "Settings", icon: "settings", path: "/settings" },
         ],
       },
       {
         name: "Moderation",
         pages: [
-          { name: "auto mod", icon: "bot", path: "auto-mod" },
-          { name: "mod logs", icon: "scroll", path: "mod-logs" },
-          { name: "bans", icon: "gravel", path: "bans" },
-          { name: "mutes", icon: "message-circle-off", path: "mute" },
+          { name: "Auto Mod", icon: "bot", path: "/auto-mod" },
+          { name: "Mod Logs", icon: "scroll", path: "/mod-logs" },
+          { name: "Bans", icon: "gravel", path: "/bans" },
+          { name: "Mutes", icon: "message-circle-off", path: "/mute" },
         ],
       },
     ],
