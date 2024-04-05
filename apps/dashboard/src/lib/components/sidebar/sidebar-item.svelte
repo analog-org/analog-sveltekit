@@ -43,7 +43,10 @@
       />
     </svg>
   </div>
-  {label}
+  <p class="hover:dark:text-white hover:text-black">
+    {label}
+  </p>
+  
 </a>
 {/if}
 
