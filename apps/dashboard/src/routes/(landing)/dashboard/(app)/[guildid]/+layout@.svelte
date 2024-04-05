@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { LayoutData } from "./$types";
+  export let data: LayoutData;
 
   import Guildbar from "$lib/components/guildbar/guildbar.svelte";
   import GuildbarContainer from "$lib/components/guildbar/guildbar-container.svelte";
@@ -13,6 +14,11 @@
   import { Input } from "$lib/components/ui/input/index.js";
   import * as Sheet from "$lib/components/ui/sheet/index.js";
   import * as Avatar from "$lib/components/ui/avatar";
+  import * as Accordion from "$lib/components/ui/accordion";
+
+  import Sidebar from "$lib/components/sidebar/sidebar.svelte";
+  import SidebarItem from "$lib/components/sidebar/sidebar-item.svelte";
+  import SidebarHeader from "$lib/components/sidebar/sidebar-header.svelte";
 
   import { NavHamburger } from "flowbite-svelte";
 
@@ -31,7 +37,15 @@
   import Search from "lucide-svelte/icons/search";
   import Users from "lucide-svelte/icons/users";
 
-  export let data: LayoutData;
+  import { config } from "config-custom";
+  const webConfig = config.website;
+
+  import { page } from "$app/stores";
+
+  const guild = data.guild;
+
+  const pathname = $page.url.pathname;
+  console.log(pathname);
 </script>
 
 <div
@@ -39,50 +53,27 @@
 >
   <div class="hidden border-r bg-muted/40 md:block">
     <div class="flex h-full max-h-screen flex-col gap-2 sticky top-0">
-      <div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-        <a href="/" class="flex items-center gap-2 font-semibold">
-          <img class="h-6 w-6 rounded-full" src={`https://cdn.discordapp.com/avatars/${data?.bot?.id}/${data?.bot?.avatar}.png?size=1024&format=webp&quality=lossless&width=0&height=256`} alt={data?.bot?.username}/>
-          <span class="">{data.bot.username}</span>
-        </a>
-      </div>
+      <SidebarHeader bot={data.bot} />
       <div class="flex-1">
-        <nav class="grid items-start px-2 text-sm font-medium lg:px-4">
-          <a
-            href="##"
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-          >
-            <Home class="h-4 w-4" />
-            Dashboard
-          </a>
-          <a
-            href="##"
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-          >
-            <ShoppingCart class="h-4 w-4" />
-            Orders
-          </a>
-          <a
-            href="##"
-            class="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
-          >
-            <Package class="h-4 w-4" />
-            Products
-          </a>
-          <a
-            href="##"
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-          >
-            <Users class="h-4 w-4" />
-            Customers
-          </a>
-          <a
-            href="##"
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-          >
-            <LineChart class="h-4 w-4" />
-            Analytics
-          </a>
-        </nav>
+        <Sidebar>
+          {#each webConfig.category[0].pages as page}
+            {#if `${pathname}` == `/dashboard/${guild.id}${page.path}`}
+              <SidebarItem
+                href={`/dashboard/${guild.id}${page.path}`}
+                icon={page.icon}
+                label={page.name}
+                active={true}
+              />
+            {:else}
+              <SidebarItem
+                href={`/dashboard/${guild.id}${page.path}`}
+                icon={page.icon}
+                label={page.name}
+                active={false}
+              />{/if}
+          {/each}
+          
+        </Sidebar>
       </div>
     </div>
   </div>
@@ -151,7 +142,6 @@
                 Analytics
               </a>
             </nav>
-            
           </Sheet.Content>
         </Sheet.Root>
         <GuildbarIcon />
