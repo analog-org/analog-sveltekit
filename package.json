@@ -15,6 +15,7 @@
   "devDependencies": {
     "discord-api-types": "^0.37.77",
     "eslint-config-custom": "*",
+    "config-custom": "*",
     "prettier": "latest",
     "turbo": "1.13.0"
   },
