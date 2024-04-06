@@ -2,6 +2,7 @@
   import type { LayoutData } from "./$types";
   export let data: LayoutData;
 
+  import { onMount } from "svelte";
   import Guildbar from "$lib/components/guildbar/guildbar.svelte";
   import GuildbarContainer from "$lib/components/guildbar/guildbar-container.svelte";
   import GuildbarIcon from "$lib/components/guildbar/guildbar-icon.svelte";
@@ -26,26 +27,25 @@
 
   import { Sun, Moon } from "lucide-svelte";
   import { toggleMode } from "mode-watcher";
-  import CircleUser from "lucide-svelte/icons/circle-user";
-  import LineChart from "lucide-svelte/icons/line-chart";
-  import Package from "lucide-svelte/icons/package";
-  import Home from "lucide-svelte/icons/home";
-  import ShoppingCart from "lucide-svelte/icons/shopping-cart";
-  import Bell from "lucide-svelte/icons/bell";
   import Menu from "lucide-svelte/icons/menu";
-  import Package2 from "lucide-svelte/icons/package-2";
-  import Search from "lucide-svelte/icons/search";
-  import Users from "lucide-svelte/icons/users";
 
   import { config } from "config-custom";
-  const webConfig = config.website;
+
+  let webConfig: any;
+  onMount(async () => {
+    webConfig = config.website;
+  });
 
   import { page } from "$app/stores";
+  import { onNavigate } from "$app/navigation";
 
   const guild = data.guild;
 
-  const pathname = $page.url.pathname;
-  console.log(pathname);
+  let pathname: string
+
+  $: page.subscribe((value) => {
+    pathname = value.url.pathname;
+  });
 </script>
 
 <div
@@ -56,23 +56,28 @@
       <SidebarHeader bot={data.bot} />
       <div class="flex-1">
         <Sidebar>
-          {#each webConfig.category[0].pages as page}
-            {#if `${pathname}` == `/dashboard/${guild.id}${page.path}`}
-              <SidebarItem
-                href={`/dashboard/${guild.id}${page.path}`}
-                icon={page.icon}
-                label={page.name}
-                active={true}
-              />
-            {:else}
-              <SidebarItem
-                href={`/dashboard/${guild.id}${page.path}`}
-                icon={page.icon}
-                label={page.name}
-                active={false}
-              />{/if}
-          {/each}
-          
+
+          {#if webConfig}
+            {#each webConfig.category[0].pages as page}
+              {#key pathname}
+                {#if `${pathname}` == `/dashboard/${guild.id}${page.path}`}
+                  <SidebarItem
+                    href={`/dashboard/${guild.id}${page.path}`}
+                    icon={page.icon}
+                    label={page.name}
+                    active={true}
+                  />
+                {:else}
+                  <SidebarItem
+                    href={`/dashboard/${guild.id}${page.path}`}
+                    icon={page.icon}
+                    label={page.name}
+                    active={false}
+                    on:click={() => console.log("clicked")}
+                  />{/if}
+              {/key}
+            {/each}
+          {/if}
         </Sidebar>
       </div>
     </div>
@@ -93,55 +98,24 @@
             </Button>
           </Sheet.Trigger>
           <Sheet.Content side="left" class="flex flex-col">
-            <nav class="grid gap-2 text-lg font-medium">
-              <a
-                href="##"
-                class="flex items-center gap-2 text-lg font-semibold"
-              >
-                <Package2 class="h-6 w-6" />
-                <span class="sr-only">Acme Inc</span>
-              </a>
-              <a
-                href="##"
-                class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-              >
-                <Home class="h-5 w-5" />
-                Dashboard
-              </a>
-              <a
-                href="##"
-                class="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-              >
-                <ShoppingCart class="h-5 w-5" />
-                Orders
-                <Badge
-                  class="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-                >
-                  6
-                </Badge>
-              </a>
-              <a
-                href="##"
-                class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-              >
-                <Package class="h-5 w-5" />
-                Products
-              </a>
-              <a
-                href="##"
-                class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-              >
-                <Users class="h-5 w-5" />
-                Customers
-              </a>
-              <a
-                href="##"
-                class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-              >
-                <LineChart class="h-5 w-5" />
-                Analytics
-              </a>
-            </nav>
+            <Sidebar>
+              {#each webConfig.category[0].pages as page}
+                {#if `${pathname}` == `/dashboard/${guild.id}${page.path}`}
+                  <SidebarItem
+                    href={`/dashboard/${guild.id}${page.path}`}
+                    icon={page.icon}
+                    label={page.name}
+                    active={true}
+                  />
+                {:else}
+                  <SidebarItem
+                    href={`/dashboard/${guild.id}${page.path}`}
+                    icon={page.icon}
+                    label={page.name}
+                    active={false}
+                  />{/if}
+              {/each}
+            </Sidebar>
           </Sheet.Content>
         </Sheet.Root>
         <GuildbarIcon />
