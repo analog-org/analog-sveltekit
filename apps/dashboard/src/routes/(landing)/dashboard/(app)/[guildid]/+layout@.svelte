@@ -41,7 +41,7 @@
 
   const guild = data.guild;
 
-  let pathname: string
+  let pathname: string;
 
   $: page.subscribe((value) => {
     pathname = value.url.pathname;
@@ -56,7 +56,6 @@
       <SidebarHeader bot={data.bot} />
       <div class="flex-1">
         <Sidebar>
-
           {#if webConfig}
             {#each webConfig.category[0].pages as page}
               {#key pathname}
@@ -78,6 +77,36 @@
               {/key}
             {/each}
           {/if}
+          <Accordion.Root multiple>
+            {#if webConfig}
+              {#each webConfig.category.slice(1) as category, i}
+                <Accordion.Item value={`item-${i}`}  >
+                  <Accordion.Trigger>
+                    {category.name}
+                  </Accordion.Trigger>
+                  <Accordion.Content>
+                    {#each category.pages as page}
+                      {#if `${pathname}` == `/dashboard/${guild.id}${page.path}`}
+                        <SidebarItem
+                          href={`/dashboard/${guild.id}${page.path}`}
+                          icon={page.icon}
+                          label={page.name}
+                          active={true}
+                        />
+                      {:else}
+                        <SidebarItem
+                          href={`/dashboard/${guild.id}${page.path}`}
+                          icon={page.icon}
+                          label={page.name}
+                          active={false}
+                        />
+                      {/if}
+                    {/each}
+                  </Accordion.Content>
+                </Accordion.Item>
+              {/each}
+            {/if}
+          </Accordion.Root>
         </Sidebar>
       </div>
     </div>
