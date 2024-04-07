@@ -52,14 +52,13 @@
   class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]"
 >
   <div class="hidden border-r bg-muted/40 md:block sticky top-0 overflow-auto">
-    <div class="flex h-full max-h-screen flex-col gap-2 ">
+    <div class="flex h-full max-h-screen flex-col gap-2">
       <SidebarHeader bot={data.bot} />
       <div class="flex-1">
         <Sidebar>
           {#key pathname}
-          {#if webConfig}
-            {#each webConfig.category[0].pages as page}
-              
+            {#if webConfig}
+              {#each webConfig.category[0].pages as page}
                 {#if `${pathname}` == `/dashboard/${guild.id}${page.path}`}
                   <SidebarItem
                     href={`/dashboard/${guild.id}${page.path}`}
@@ -75,39 +74,38 @@
                     active={false}
                     on:click={() => console.log("clicked")}
                   />{/if}
-              
-            {/each}
-          {/if}
-          <Accordion.Root multiple class="border-none">
-            {#if webConfig}
-              {#each webConfig.category.slice(1) as category, i}
-                <Accordion.Item value={`item-${i}`}  >
-                  <Accordion.Trigger>
-                    {category.name}
-                  </Accordion.Trigger>
-                  <Accordion.Content>
-                    {#each category.pages as page}
-                      {#if `${pathname}` == `/dashboard/${guild.id}${page.path}`}
-                        <SidebarItem
-                          href={`/dashboard/${guild.id}${page.path}`}
-                          icon={page.icon}
-                          label={page.name}
-                          active={true}
-                        />
-                      {:else}
-                        <SidebarItem
-                          href={`/dashboard/${guild.id}${page.path}`}
-                          icon={page.icon}
-                          label={page.name}
-                          active={false}
-                        />
-                      {/if}
-                    {/each}
-                  </Accordion.Content>
-                </Accordion.Item>
               {/each}
             {/if}
-          </Accordion.Root>
+            <Accordion.Root multiple class="border-none">
+              {#if webConfig}
+                {#each webConfig.category.slice(1) as category, i}
+                  <Accordion.Item value={`item-${i}`}>
+                    <Accordion.Trigger>
+                      {category.name}
+                    </Accordion.Trigger>
+                    <Accordion.Content>
+                      {#each category.pages as page}
+                        {#if `${pathname}` == `/dashboard/${guild.id}${page.path}`}
+                          <SidebarItem
+                            href={`/dashboard/${guild.id}${page.path}`}
+                            icon={page.icon}
+                            label={page.name}
+                            active={true}
+                          />
+                        {:else}
+                          <SidebarItem
+                            href={`/dashboard/${guild.id}${page.path}`}
+                            icon={page.icon}
+                            label={page.name}
+                            active={false}
+                          />
+                        {/if}
+                      {/each}
+                    </Accordion.Content>
+                  </Accordion.Item>
+                {/each}
+              {/if}
+            </Accordion.Root>
           {/key}
         </Sidebar>
       </div>
@@ -128,24 +126,59 @@
               <span class="sr-only">Toggle navigation menu</span>
             </Button>
           </Sheet.Trigger>
-          <Sheet.Content side="left" class="flex flex-col">
+          <Sheet.Content side="left" class="flex flex-col overflow-auto">
             <Sidebar>
-              {#each webConfig.category[0].pages as page}
-                {#if `${pathname}` == `/dashboard/${guild.id}${page.path}`}
-                  <SidebarItem
-                    href={`/dashboard/${guild.id}${page.path}`}
-                    icon={page.icon}
-                    label={page.name}
-                    active={true}
-                  />
-                {:else}
-                  <SidebarItem
-                    href={`/dashboard/${guild.id}${page.path}`}
-                    icon={page.icon}
-                    label={page.name}
-                    active={false}
-                  />{/if}
-              {/each}
+              {#key pathname}
+                {#if webConfig}
+                  {#each webConfig.category[0].pages as page}
+                    {#if `${pathname}` == `/dashboard/${guild.id}${page.path}`}
+                      <SidebarItem
+                        href={`/dashboard/${guild.id}${page.path}`}
+                        icon={page.icon}
+                        label={page.name}
+                        active={true}
+                      />
+                    {:else}
+                      <SidebarItem
+                        href={`/dashboard/${guild.id}${page.path}`}
+                        icon={page.icon}
+                        label={page.name}
+                        active={false}
+                        on:click={() => console.log("clicked")}
+                      />{/if}
+                  {/each}
+                {/if}
+                <Accordion.Root multiple class="border-none">
+                  {#if webConfig}
+                    {#each webConfig.category.slice(1) as category, i}
+                      <Accordion.Item value={`item-${i}`}>
+                        <Accordion.Trigger>
+                          {category.name}
+                        </Accordion.Trigger>
+                        <Accordion.Content>
+                          {#each category.pages as page}
+                            {#if `${pathname}` == `/dashboard/${guild.id}${page.path}`}
+                              <SidebarItem
+                                href={`/dashboard/${guild.id}${page.path}`}
+                                icon={page.icon}
+                                label={page.name}
+                                active={true}
+                              />
+                            {:else}
+                              <SidebarItem
+                                href={`/dashboard/${guild.id}${page.path}`}
+                                icon={page.icon}
+                                label={page.name}
+                                active={false}
+                              />
+                            {/if}
+                          {/each}
+                        </Accordion.Content>
+                      </Accordion.Item>
+                    {/each}
+                  {/if}
+                </Accordion.Root>
+              {/key}
             </Sidebar>
           </Sheet.Content>
         </Sheet.Root>
