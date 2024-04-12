@@ -16,10 +16,85 @@ export const config = {
         pages: [
           { name: "Auto Mod", icon: "bot", path: "/auto-mod" },
           { name: "Mod Logs", icon: "scroll", path: "/mod-logs" },
-          { name: "Bans", icon: "gravel", path: "/bans" },
+          { name: "Bans", icon: "gavel", path: "/bans" },
           { name: "Mutes", icon: "message-circle-off", path: "/mute" },
         ],
       },
+      {
+        name: "Moderation",
+        pages: [
+          { name: "Auto Mod", icon: "bot", path: "/auto-mod" },
+          { name: "Mod Logs", icon: "scroll", path: "/mod-logs" },
+          { name: "Bans", icon: "gavel", path: "/bans" },
+          { name: "Mutes", icon: "message-circle-off", path: "/mute" },
+          
+        ],
+      },
+      {
+        name: "Moderation",
+        pages: [
+          { name: "Auto Mod", icon: "bot", path: "/auto-mod" },
+          { name: "Mod Logs", icon: "scroll", path: "/mod-logs" },
+          { name: "Bans", icon: "gavel", path: "/bans" },
+          { name: "Mutes", icon: "message-circle-off", path: "/mute" },
+        ],
+      },
+      {
+        name: "Moderation",
+        pages: [
+          { name: "Auto Mod", icon: "bot", path: "/auto-mod" },
+          { name: "Mod Logs", icon: "scroll", path: "/mod-logs" },
+          { name: "Bans", icon: "gavel", path: "/bans" },
+          { name: "Mutes", icon: "message-circle-off", path: "/mute" },
+        ],
+      },
+      {
+        name: "Moderation",
+        pages: [
+          { name: "Auto Mod", icon: "bot", path: "/auto-mod" },
+          { name: "Mod Logs", icon: "scroll", path: "/mod-logs" },
+          { name: "Bans", icon: "gavel", path: "/bans" },
+          { name: "Mutes", icon: "message-circle-off", path: "/mute" },
+        ],
+      },
+      {
+        name: "Moderation",
+        pages: [
+          { name: "Auto Mod", icon: "bot", path: "/auto-mod" },
+          { name: "Mod Logs", icon: "scroll", path: "/mod-logs" },
+          { name: "Bans", icon: "gavel", path: "/bans" },
+          { name: "Mutes", icon: "message-circle-off", path: "/mute" },
+        ],
+      },
+      {
+        name: "Moderation",
+        pages: [
+          { name: "Auto Mod", icon: "bot", path: "/auto-mod" },
+          { name: "Mod Logs", icon: "scroll", path: "/mod-logs" },
+          { name: "Bans", icon: "gavel", path: "/bans" },
+          { name: "Mutes", icon: "message-circle-off", path: "/mute" },
+        ],
+      },
+      {
+        name: "Moderation",
+        pages: [
+          { name: "Auto Mod", icon: "bot", path: "/auto-mod" },
+          { name: "Mod Logs", icon: "scroll", path: "/mod-logs" },
+          { name: "Bans", icon: "gavel", path: "/bans" },
+          { name: "Mutes", icon: "message-circle-off", path: "/mute" },
+        ],
+      },
+      {
+        name: "Moderation",
+        pages: [
+          { name: "Auto Mod", icon: "bot", path: "/auto-mod" },
+          { name: "Mod Logs", icon: "scroll", path: "/mod-logs" },
+          { name: "Bans", icon: "gavel", path: "/bans" },
+          { name: "Mutes", icon: "message-circle-off", path: "/mute" },
+        ],
+      },
+      
+      
     ],
   },
 };

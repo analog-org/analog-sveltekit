@@ -15,6 +15,7 @@
 		"@sveltejs/adapter-auto": "^3.2.0",
 		"@sveltejs/kit": "^2.5.5",
 		"autoprefixer": "^10.4.19",
+		"custom-config": "*",
 		"flowbite": "^2.3.0",
 		"flowbite-svelte": "^0.44.24",
 		"node-vibrant": "^3.2.1-alpha.1",
@@ -26,16 +27,16 @@
 		"tailwindcss": "^3.4.3",
 		"tslib": "^2.6.2",
 		"typescript": "^5.4.3",
-		"vite": "^5.2.7",
-		"custom-config": "*"
+		"vite": "^5.2.7"
 	},
 	"type": "module",
 	"dependencies": {
 		"@auth/core": "^0.28.1",
 		"@auth/sveltekit": "^0.14.1",
 		"@discordjs/rest": "^2.2.0",
-		"bits-ui": "^0.21.2",
+		"bits-ui": "^0.21.3",
 		"clsx": "^2.1.0",
+		"cmdk-sv": "^0.0.17",
 		"discord-api-types": "^0.37.77",
 		"discord.js": "^14.14.1",
 		"lucide-svelte": "^0.363.0",
