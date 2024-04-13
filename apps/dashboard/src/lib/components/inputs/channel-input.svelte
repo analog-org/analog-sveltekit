@@ -10,41 +10,55 @@
 
   export let channels: APIChannel[] = [];
 
-  let sortedChannels: any = [];
-  let currentGroup: any = null;
+  type ChannelGroup = {
+    channel: APIChannel;
+    items: APIChannel[];
+  };
+
+  let sortedChannels: ChannelGroup[] = [];
+  let currentGroup: ChannelGroup;
+
+  let validTypes = [ChannelType.GuildVoice, ChannelType.GuildText, ChannelType.GuildAnnouncement];
 
   channels.forEach((channel) => {
     if (channel.type === 4) {
-      currentGroup = {
-        id: channel.id,
-        name: channel.name,
-        position: channel.position,
-        items: [],
-      };
+      currentGroup = { channel, items: [] };
       sortedChannels.push(currentGroup);
     } else if (
-      (channel.type === ChannelType.GuildVoice ||
-        channel.type === ChannelType.GuildText ||
-        channel.type === ChannelType.GuildAnnouncement) &&
-      currentGroup
+      (validTypes.includes(channel.type)) &&
+      currentGroup && 'parent_id' in channel
     ) {
       let parentGroup = sortedChannels.find(
-        (group: any) => group.id === channel.parent_id
+        (group: ChannelGroup) => group.channel.id == channel.parent_id
       );
       if (parentGroup) {
-        parentGroup.items.push({
-          id: channel.id,
-          name: channel.name,
-          position: channel.position,
-        });
+        parentGroup.items.push(channel);
       }
     }
   });
 
   sortedChannels.forEach((group) => {
-    group.items.sort((a, b) => a.position - b.position);
+    group.items.sort((a, b) => {
+      if (
+        'position' in a && 'position' in b &&
+      validTypes.includes(a.type) && validTypes.includes(b.type)
+      ) {
+        return a.position - b.position;
+      }
+      return 0;
+    });
   });
-  sortedChannels.sort((a, b) => a.position - b.position);
+  sortedChannels.sort((a, b) => {
+      if (
+        'position' in a.channel && 'position' in b.channel &&
+        a.channel.type === ChannelType.GuildCategory && b.channel.type === ChannelType.GuildCategory
+      ) {
+        return a.channel.position - b.channel.position;
+      }
+      return 0;
+    });
+
+  
 
   let open = false;
   let name = "";
@@ -53,11 +67,9 @@
     sortedChannels
       .map((group) => group.items)
       .flat()
-      .find((item) => item.name === name)?? "Select a channel...";
+      .find((item) => item.name === name) ?? "Select a channel...";
 
-  // We want to refocus the trigger button when the user selects
-  // an item from the list so users can continue navigating the
-  // rest of the form with the keyboard.
+  console.log(selectedValue);
   function closeAndFocusTrigger(triggerId: string) {
     open = false;
     tick().then(() => {
@@ -75,8 +87,8 @@
       aria-expanded={open}
       class="w-[200px] justify-between "
     >
-    <p class="truncate">{selectedValue.name ?? "Select a channel..."}</p>
-      
+      <p class="truncate">{selectedValue.name ?? "Select a channel..."}</p>
+
       <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
     </Button>
   </Popover.Trigger>
@@ -84,33 +96,31 @@
     <Command.Root class="">
       <Command.Input placeholder="Search Channels..." />
       <Command.Empty>No Channels found.</Command.Empty>
-      <div class="h-56 overflow-auto" >
-        {#each sortedChannels as group (group.id)}
-        <Command.Group>
-          <p class="text-zinc-400 text-xs">{group.name}</p>
-          
-          {#each group.items as item (item.id)}
-            <Command.Item
-              value={item.name}
-              onSelect={(currentValue) => {
-                name = currentValue;
-                closeAndFocusTrigger(ids.trigger);
-              }}
-            >
-              <Check
-                class={cn(
-                  "mr-2 h-4 w-4",
-                  name !== item.name && "text-transparent"
-                )}
-              />
-              <p class="truncate">{item.name}</p>
-              
-            </Command.Item>
-          {/each}
-        </Command.Group>
-      {/each}
+      <div class="h-56 overflow-auto">
+        {#each sortedChannels as group (group.channel.id)}
+          <Command.Group>
+            <p class="text-zinc-400 text-xs">{group.channel.name}</p>
+
+            {#each group.items as item (item.id)}
+              <Command.Item
+                value={`${item.name}`}
+                onSelect={(currentValue) => {
+                  name = currentValue;
+                  closeAndFocusTrigger(ids.trigger);
+                }}
+              >
+                <Check
+                  class={cn(
+                    "mr-2 h-4 w-4",
+                    name !== item.name && "text-transparent"
+                  )}
+                />
+                <p class="truncate"># {item.name}</p>
+              </Command.Item>
+            {/each}
+          </Command.Group>
+        {/each}
       </div>
-      
     </Command.Root>
   </Popover.Content>
 </Popover.Root>
