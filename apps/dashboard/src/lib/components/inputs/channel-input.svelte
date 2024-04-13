@@ -53,7 +53,7 @@
     sortedChannels
       .map((group) => group.items)
       .flat()
-      .find((item) => item.name === name)?.name ?? "Select a channel...";
+      .find((item) => item.name === name)?? "Select a channel...";
 
   // We want to refocus the trigger button when the user selects
   // an item from the list so users can continue navigating the
@@ -73,19 +73,22 @@
       variant="outline"
       role="combobox"
       aria-expanded={open}
-      class="w-[200px] justify-between"
+      class="w-[200px] justify-between "
     >
-      {selectedValue}
+    <p class="truncate">{selectedValue.name ?? "Select a channel..."}</p>
+      
       <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
     </Button>
   </Popover.Trigger>
   <Popover.Content class="w-[200px] p-0">
-    <Command.Root>
+    <Command.Root class="">
       <Command.Input placeholder="Search Channels..." />
       <Command.Empty>No Channels found.</Command.Empty>
-      {#each sortedChannels as group (group.id)}
+      <div class="h-56 overflow-auto" >
+        {#each sortedChannels as group (group.id)}
         <Command.Group>
-          {group.name}
+          <p class="text-zinc-400 text-xs">{group.name}</p>
+          
           {#each group.items as item (item.id)}
             <Command.Item
               value={item.name}
@@ -100,11 +103,14 @@
                   name !== item.name && "text-transparent"
                 )}
               />
-              {item.name}
+              <p class="truncate">{item.name}</p>
+              
             </Command.Item>
           {/each}
         </Command.Group>
       {/each}
+      </div>
+      
     </Command.Root>
   </Popover.Content>
 </Popover.Root>
