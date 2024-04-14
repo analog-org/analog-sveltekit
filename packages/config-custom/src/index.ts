@@ -8,6 +8,7 @@ export const config = {
         pages: [
           { name: "Dashboard", icon: "home", path: "" },
           { name: "Embed Sender", icon: "layout-template", path: "/embed" },
+          { name: "Dev Testing", icon: "code", path: "/dev" },
           { name: "Settings", icon: "settings", path: "/settings" },
         ],
       },
@@ -27,7 +28,6 @@ export const config = {
           { name: "Mod Logs", icon: "scroll", path: "/mod-logs" },
           { name: "Bans", icon: "gavel", path: "/bans" },
           { name: "Mutes", icon: "message-circle-off", path: "/mute" },
-          
         ],
       },
       {
@@ -93,8 +93,6 @@ export const config = {
           { name: "Mutes", icon: "message-circle-off", path: "/mute" },
         ],
       },
-      
-      
     ],
   },
 };
