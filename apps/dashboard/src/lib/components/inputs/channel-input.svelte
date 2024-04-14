@@ -84,7 +84,7 @@
       .find((item) => item.name === name) ?? undefined
   );
 
-  console.log(selectedChannel);
+
   function closeAndFocusTrigger(triggerId: string) {
     open = false;
     tick().then(() => {
