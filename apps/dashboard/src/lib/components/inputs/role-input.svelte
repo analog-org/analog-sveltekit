@@ -7,13 +7,15 @@
   import { Button } from "$lib/components/ui/button/index.js";
   import { tick } from "svelte";
   import { writable } from "svelte/store";
+  import { mode } from "mode-watcher";
   import {
     ChannelType,
     type APIChannel,
     type APIRole,
   } from "discord-api-types/v10";
+  import { CircleUser } from "lucide-svelte";
 
-  export let roles: APIROle[] = [];
+  export let roles: APIRole[] = [];
 
   const selectedRoleStore = writable<APIRole | undefined>(undefined);
 
@@ -32,11 +34,12 @@
   let open = false;
   let name = "";
 
+  
+
   $: selectedRoleStore.set(
     sortedRoles.find((item) => item.name === name) ?? undefined
   );
 
-  console.log(selectedRole);
   function closeAndFocusTrigger(triggerId: string) {
     open = false;
     tick().then(() => {
@@ -55,7 +58,7 @@
       class="w-[200px] justify-between "
     >
       <p class="truncate">
-        {$selectedRoleStore?.name ?? "Select a channel..."}
+        {$selectedRoleStore?.name ?? "Select a role..."}
       </p>
 
       <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -63,8 +66,8 @@
   </Popover.Trigger>
   <Popover.Content class="w-[200px] p-0">
     <Command.Root class="">
-      <Command.Input placeholder="Search Channels..." />
-      <Command.Empty>No Channels found.</Command.Empty>
+      <Command.Input placeholder="Search Roles..." />
+      <Command.Empty>No Roles found.</Command.Empty>
       <div class="h-56 overflow-auto">
         <Command.Group>
           {#each sortedRoles as role (role.id)}
@@ -81,7 +84,26 @@
                   name !== role.name && "text-transparent"
                 )}
               />
-              <p class="truncate">@ {role.name}</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={`#${ role.color.toString(16).padStart(6, `${$mode === "dark" ? "f" : "0"}`)}`}
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-circle-user"
+                ><circle cx="12" cy="12" r="10" /><circle
+                  cx="12"
+                  cy="10"
+                  r="3"
+                /><path
+                  d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"
+                /></svg
+              >
+              <p class="pl-1 truncate">{role.name}</p>
             </Command.Item>
           {/each}
         </Command.Group>
