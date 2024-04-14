@@ -14,6 +14,6 @@ export const load = (async ({ parent }) => {
     //console.log(roles)
     
     return {
-        channels
+        channels, roles
     };
 }) satisfies PageServerLoad;
