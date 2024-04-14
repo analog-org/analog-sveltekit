@@ -6,9 +6,12 @@
   import { cn } from "$lib/utils.js";
   import { Button } from "$lib/components/ui/button/index.js";
   import { tick } from "svelte";
+  import { writable } from "svelte/store";
   import { ChannelType, type APIChannel } from "discord-api-types/v10";
 
   export let channels: APIChannel[] = [];
+
+  const selectedChannelStore = writable<APIChannel | undefined>(undefined);
 
   type ChannelGroup = {
     channel: APIChannel;
@@ -18,15 +21,20 @@
   let sortedChannels: ChannelGroup[] = [];
   let currentGroup: ChannelGroup;
 
-  let validTypes = [ChannelType.GuildVoice, ChannelType.GuildText, ChannelType.GuildAnnouncement];
+  let validTypes = [
+    ChannelType.GuildVoice,
+    ChannelType.GuildText,
+    ChannelType.GuildAnnouncement,
+  ];
 
   channels.forEach((channel) => {
     if (channel.type === 4) {
       currentGroup = { channel, items: [] };
       sortedChannels.push(currentGroup);
     } else if (
-      (validTypes.includes(channel.type)) &&
-      currentGroup && 'parent_id' in channel
+      validTypes.includes(channel.type) &&
+      currentGroup &&
+      "parent_id" in channel
     ) {
       let parentGroup = sortedChannels.find(
         (group: ChannelGroup) => group.channel.id == channel.parent_id
@@ -40,8 +48,10 @@
   sortedChannels.forEach((group) => {
     group.items.sort((a, b) => {
       if (
-        'position' in a && 'position' in b &&
-      validTypes.includes(a.type) && validTypes.includes(b.type)
+        "position" in a &&
+        "position" in b &&
+        validTypes.includes(a.type) &&
+        validTypes.includes(b.type)
       ) {
         return a.position - b.position;
       }
@@ -49,33 +59,40 @@
     });
   });
   sortedChannels.sort((a, b) => {
-      if (
-        'position' in a.channel && 'position' in b.channel &&
-        a.channel.type === ChannelType.GuildCategory && b.channel.type === ChannelType.GuildCategory
-      ) {
-        return a.channel.position - b.channel.position;
-      }
-      return 0;
-    });
+    if (
+      "position" in a.channel &&
+      "position" in b.channel &&
+      a.channel.type === ChannelType.GuildCategory &&
+      b.channel.type === ChannelType.GuildCategory
+    ) {
+      return a.channel.position - b.channel.position;
+    }
+    return 0;
+  });
 
-  
+  export const selectedChannel = {
+    subscribe: selectedChannelStore.subscribe,
+  };
 
   let open = false;
   let name = "";
 
-  $: selectedValue =
+  $: selectedChannelStore.set(
     sortedChannels
       .map((group) => group.items)
       .flat()
-      .find((item) => item.name === name) ?? "Select a channel...";
+      .find((item) => item.name === name) ?? undefined
+  );
 
-  console.log(selectedValue);
+  console.log(selectedChannel);
   function closeAndFocusTrigger(triggerId: string) {
     open = false;
     tick().then(() => {
       document.getElementById(triggerId)?.focus();
     });
   }
+
+ 
 </script>
 
 <Popover.Root bind:open let:ids>
@@ -87,7 +104,7 @@
       aria-expanded={open}
       class="w-[200px] justify-between "
     >
-      <p class="truncate">{selectedValue.name ?? "Select a channel..."}</p>
+      <p class="truncate">{$selectedChannelStore?.name ?? "Select a channel..."}</p>
 
       <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
     </Button>
