@@ -67,9 +67,6 @@
 		--ring: 240 3.7% 15.9%;
 
 		--picker-background: var(--muted-foreground);
-		--cp-border-color: white;
-		--cp-input-color: var(--muted);
-		--cp-button-hover-color: #777
 	}
 }
  
