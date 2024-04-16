@@ -11,6 +11,7 @@
 	},
 	"devDependencies": {
 		"@melt-ui/pp": "^0.3.0",
+		"@melt-ui/svelte": "^0.76.3",
 		"@sapphire/bitfield": "^1.2.2",
 		"@sveltejs/adapter-auto": "^3.2.0",
 		"@sveltejs/kit": "^2.5.5",
