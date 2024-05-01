@@ -5,7 +5,7 @@
   import { writable } from "svelte/store";
   import type { APIChannel, APIRole } from "discord-api-types/v10";
 
-  import RoleInput from "$lib/components/inputs/role-input.svelte";
+  import RoleInput from "$lib/components/inputs/role-input-copy.svelte";
 
   let selectedChannel = writable<APIChannel | undefined>(undefined);
   let selectedRole = writable<APIRole | undefined>(undefined);

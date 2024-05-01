@@ -3,18 +3,21 @@
   import ChevronsUpDown from "lucide-svelte/icons/chevrons-up-down";
   import * as Popover from "$lib/components/ui/popover/index.js";
   import * as Command from "$lib/components/ui/command/index.js";
-  import { Combobox } from "bits-ui";
-  import { cn, flyAndScale } from "$lib/utils.js";
+  import { cn } from "$lib/utils.js";
   import { Button } from "$lib/components/ui/button/index.js";
   import { tick } from "svelte";
   import { writable } from "svelte/store";
   import { mode } from "mode-watcher";
-  import { type APIRole } from "discord-api-types/v10";
+  import {
+    ChannelType,
+    type APIChannel,
+    type APIRole,
+  } from "discord-api-types/v10";
   import { CircleUser } from "lucide-svelte";
 
   export let roles: APIRole[] = [];
 
-  const selectedRoleStore = writable<APIRole[] | undefined>([]);
+  const selectedRoleStore = writable<APIRole | undefined>(undefined);
 
   let sortedRoles: APIRole[] = [];
 
@@ -31,63 +34,21 @@
   let open = false;
   let name = "";
 
-  $: {
-    
-    const foundRole =
-      open && name
-        ? sortedRoles.filter((item) => item.name.toLowerCase().includes(name.toLowerCase()))
-        : sortedRoles;
-    
-    selectedRoleStore.set(foundRole.length > 0 ? foundRole : undefined);
-  }
-
   
+
+  $: selectedRoleStore.set(
+    sortedRoles.find((item) => item.name === name) ?? undefined
+  );
+
+  function closeAndFocusTrigger(triggerId: string) {
+    open = false;
+    tick().then(() => {
+      document.getElementById(triggerId)?.focus();
+    });
+  }
 </script>
 
-<Combobox.Root
-  items={$selectedRoleStore?.map((role) => ({ value: role.name, ...role }))}
-  bind:inputValue={name} 
-  bind:touchedInput={open}
-  
-  
->
-  <div class="relative">
-    <Combobox.Input
-      class="inline-flex h-input w-[296px] truncate rounded-9px border border-border-input bg-background px-11 text-sm transition-colors placeholder:text-foreground-alt/50 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 focus:ring-offset-background"
-      placeholder="Select a Role"
-      aria-label="Select a Role"
-    />
-    <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
-  </div>
-
-  <Combobox.Content
-    class="w-full rounded-xl border border-muted bg-background px-1 py-3 shadow-popover outline-none h-56 overflow-auto"
-    transition={flyAndScale}
-    sideOffset={8}
-  >
-    {#each $selectedRoleStore ?? [] as role (role.name)}
-      <Combobox.Item
-        class="flex h-10 w-full select-none items-center rounded-button py-3 pl-5 pr-1.5 text-sm capitalize outline-none transition-all duration-75 data-[highlighted]:bg-muted"
-        value={role.name}
-        
-        
-        label={role.name}
-      >
-        {role.name}
-        <Combobox.ItemIndicator class="ml-auto" asChild={false}>
-          <Check />
-        </Combobox.ItemIndicator>
-      </Combobox.Item>
-    {:else}
-      <span class="block px-5 py-2 text-sm text-muted-foreground">
-        No results found
-      </span>
-    {/each}
-  </Combobox.Content>
-  <Combobox.HiddenInput name="favoriteFruit" />
-</Combobox.Root>
-
-<!-- <Popover.Root bind:open let:ids>
+<Popover.Root bind:open let:ids>
   <Popover.Trigger asChild let:builder>
     <Button
       builders={[builder]}
@@ -150,4 +111,3 @@
     </Command.Root>
   </Popover.Content>
 </Popover.Root>
- -->
