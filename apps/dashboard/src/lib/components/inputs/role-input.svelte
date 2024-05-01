@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { createCombobox, melt } from '@melt-ui/svelte';
+  import { fly } from 'svelte/transition';
   import Check from "lucide-svelte/icons/check";
   import ChevronsUpDown from "lucide-svelte/icons/chevrons-up-down";
   import * as Popover from "$lib/components/ui/popover/index.js";
@@ -19,6 +21,15 @@
 
   const selectedRoleStore = writable<APIRole | undefined>(undefined);
 
+    const {
+    elements: { menu, input, option, label },
+    states: { open, inputValue, touchedInput },
+    helpers: { isSelected },
+  } = createCombobox({
+    forceVisible: true,
+    multiple: true,
+  });
+
   let sortedRoles: APIRole[] = [];
 
   roles.forEach((role) => {
@@ -27,87 +38,77 @@
 
   sortedRoles.sort((a, b) => a.position - b.position);
 
-  export const selectedRole = {
-    subscribe: selectedRoleStore.subscribe,
-  };
-
-  let open = false;
-  let name = "";
-
-  
-
-  $: selectedRoleStore.set(
-    sortedRoles.find((item) => item.name === name) ?? undefined
-  );
-
-  function closeAndFocusTrigger(triggerId: string) {
-    open = false;
-    tick().then(() => {
-      document.getElementById(triggerId)?.focus();
-    });
-  }
+  $: filteredRoles = $touchedInput
+    ? sortedRoles.filter(({ name }) => {
+        const normalizedInput = $inputValue.toLowerCase();
+        return name.toLowerCase().includes(normalizedInput);
+      })
+    : sortedRoles;
 </script>
 
-<Popover.Root bind:open let:ids>
-  <Popover.Trigger asChild let:builder>
-    <Button
-      builders={[builder]}
-      variant="outline"
-      role="combobox"
-      aria-expanded={open}
-      class="w-[200px] justify-between "
-    >
-      <p class="truncate">
-        {$selectedRoleStore?.name ?? "Select a role..."}
-      </p>
 
-      <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
-    </Button>
-  </Popover.Trigger>
-  <Popover.Content class="w-[200px] p-0">
-    <Command.Root class="">
-      <Command.Input placeholder="Search Roles..." />
-      <Command.Empty>No Roles found.</Command.Empty>
-      <div class="h-56 overflow-auto">
-        <Command.Group>
-          {#each sortedRoles as role (role.id)}
-            <Command.Item
-              value={`${role.name}`}
-              onSelect={(currentValue) => {
-                name = currentValue;
-                closeAndFocusTrigger(ids.trigger);
-              }}
-            >
-              <Check
-                class={cn(
-                  "mr-2 h-4 w-4",
-                  name !== role.name && "text-transparent"
-                )}
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={`#${ role.color.toString(16).padStart(6, `${$mode === "dark" ? "f" : "0"}`)}`}
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-circle-user"
-                ><circle cx="12" cy="12" r="10" /><circle
-                  cx="12"
-                  cy="10"
-                  r="3"
-                /><path
-                  d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"
-                /></svg
-              >
-              <p class="pl-1 truncate">{role.name}</p>
-            </Command.Item>
-          {/each}
-        </Command.Group>
-      </div>
-    </Command.Root>
-  </Popover.Content>
-</Popover.Root>
+<div class="flex flex-col gap-1">
+  <label use:melt={$label}>
+    <span class="text-sm font-medium text-magnum-900">Choose a role:</span>
+  </label>
+
+  <div class="relative">
+    <input
+      use:melt={$input}
+      class="flex h-10 items-center justify-between rounded-lg bg-white px-3 pr-12 text-black"
+      placeholder="Role name"
+    />
+    <div class="absolute right-2 top-1/2 z-10 -translate-y-1/2 text-magnum-900">
+      {#if $open}
+        <ChevronUp class="size-4" />
+      {:else}
+        <ChevronDown class="size-4" />
+      {/if}
+    </div>
+  </div>
+</div>
+{#if $open}
+  <ul
+    class="z-10 flex max-h-[300px] flex-col overflow-hidden rounded-lg"
+    use:melt={$menu}
+    transition:fly={{ duration: 150, y: -5 }}
+  >
+    <div
+      class="flex max-h-full flex-col gap-0 overflow-y-auto bg-white px-2 py-2 text-black"
+      tabindex="0"
+    >
+      {#each filteredRoles as role, index (index)}
+        <li
+          use:melt={$option({
+            value: role,
+            label: role.name,
+          })}
+          class="relative cursor-pointer scroll-my-2 rounded-md py-2 pl-4 pr-4 data-[highlighted]:bg-magnum-200 data-[highlighted]:text-magnum-900"
+        >
+          {#if $isSelected(role)}
+            <div class="check absolute left-2 top-1/2 z-10 text-magnum-900">
+              <Check class="size-4" />
+            </div>
+          {/if}
+          <div class="pl-4">
+            <span class="font-medium">{role.name}</span>
+          </div>
+        </li>
+      {:else}
+        <li
+          class="relative cursor-pointer rounded-md py-1 pl-8 pr-4 data-[highlighted]:bg-magnum-100 data-[highlighted]:text-magnum-700"
+        >
+          No results found
+        </li>
+      {/each}
+    </div>
+  </ul>
+{/if}
+
+<style lang="postcss">
+  .check {
+    @apply absolute left-2 top-1/2 text-magnum-500;
+    translate: 0 calc(-50% + 1px);
+  }
+</style>
+
