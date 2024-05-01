@@ -1,8 +1,10 @@
 <script lang="ts">
-  import { createCombobox, melt } from '@melt-ui/svelte';
-  import { fly } from 'svelte/transition';
+  import { createCombobox, melt } from "@melt-ui/svelte";
+  import { fly } from "svelte/transition";
   import Check from "lucide-svelte/icons/check";
   import ChevronsUpDown from "lucide-svelte/icons/chevrons-up-down";
+  import ChevronDown from "lucide-svelte/icons/chevron-down";
+  import ChevronUp from "lucide-svelte/icons/chevron-up";
   import * as Popover from "$lib/components/ui/popover/index.js";
   import * as Command from "$lib/components/ui/command/index.js";
   import { cn } from "$lib/utils.js";
@@ -18,10 +20,10 @@
   import { CircleUser } from "lucide-svelte";
 
   export let roles: APIRole[] = [];
+  export let filteredRoles: APIRole[] = [];
+  export const selectedRoleStore = writable<APIRole[] | undefined>(undefined);
 
-  const selectedRoleStore = writable<APIRole | undefined>(undefined);
-
-    const {
+  const {
     elements: { menu, input, option, label },
     states: { open, inputValue, touchedInput },
     helpers: { isSelected },
@@ -44,11 +46,14 @@
         return name.toLowerCase().includes(normalizedInput);
       })
     : sortedRoles;
+
+  $: selectedRoleStore.set(
+    filteredRoles
+  );
 </script>
 
-
 <div class="flex flex-col gap-1">
-  <label use:melt={$label}>
+  <label use:melt={$label} for="role-input">
     <span class="text-sm font-medium text-magnum-900">Choose a role:</span>
   </label>
 
@@ -75,7 +80,6 @@
   >
     <div
       class="flex max-h-full flex-col gap-0 overflow-y-auto bg-white px-2 py-2 text-black"
-      tabindex="0"
     >
       {#each filteredRoles as role, index (index)}
         <li
@@ -111,4 +115,3 @@
     translate: 0 calc(-50% + 1px);
   }
 </style>
-

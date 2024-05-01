@@ -35,6 +35,7 @@
 		"@auth/core": "^0.28.1",
 		"@auth/sveltekit": "^0.14.1",
 		"@discordjs/rest": "^2.2.0",
+		"@tailwindcss/typography": "^0.5.13",
 		"bits-ui": "^0.21.3",
 		"clsx": "^2.1.0",
 		"cmdk-sv": "^0.0.17",
