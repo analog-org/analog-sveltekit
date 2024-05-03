@@ -10,11 +10,13 @@
 
   let selectedChannel = writable<APIChannel | undefined>(undefined);
   let oldSelectedRole = writable<APIRole | undefined>(undefined);
-  let selectedRole = writable<APIRole[] | undefined>(undefined);
+  let selectedRole: APIRole[] | undefined = [];
 
   import { Color, ColorInput } from "color-picker-svelte";
 
   let color = new Color("#ff3d91");
+
+   $: console.log(selectedRole)
 
   export let data: PageData;
 </script>
@@ -32,10 +34,10 @@
     {$oldSelectedRole?.color.toString(16).padStart(6, "0")}
   </p>
 
-  <RoleInput bind:selectedRoleStore={selectedRole} roles={data?.roles} />
+  <RoleInput bind:selectedRoles={selectedRole} roles={data?.roles} />
   <p>
-    Selected role: {$selectedRole ? $selectedRole[0].name : "None"}
-    {$selectedRole[0]?.color.toString(16).padStart(6, "0") ?? ""}
+    Selected role: {selectedRole ? selectedRole[0]?.name : "None"}
+    {(selectedRole && selectedRole[0]?.color.toString(16).padStart(6, "0")) ?? ""}
   </p>
 
   <div class="w-52">

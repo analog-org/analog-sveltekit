@@ -10,7 +10,7 @@
   import { cn } from "$lib/utils.js";
   import { Button } from "$lib/components/ui/button/index.js";
   import { tick } from "svelte";
-  import { writable } from "svelte/store";
+  import { writable, derived } from "svelte/store";
   import { mode } from "mode-watcher";
   import {
     ChannelType,
@@ -20,14 +20,30 @@
   import { CircleUser } from "lucide-svelte";
 
   export let roles: APIRole[] = [];
-  export let filteredRoles: APIRole[] = [];
-  export const selectedRoleStore = writable<APIRole[] | undefined>(undefined);
+ // export let filteredRoles: APIRole[] = [];
+  export let selectedRoles: APIRole[] | undefined = [];
+
+   let selectedRoleStore = writable<APIRole[] | undefined>(undefined);
+  const selectedOptionsStore = writable<{ value: string; label: string }[]>([]);
+  
+  selectedRoleStore.subscribe(
+  ($selectedRoleStore) => {
+    return selectedOptionsStore.set(
+      $selectedRoleStore?.map((role) => ({
+        value: role.id,
+        label: role.name,
+        ...role,
+      })) || []
+    );
+  }
+);
 
   const {
     elements: { menu, input, option, label },
-    states: { open, inputValue, touchedInput },
+    states: { open, inputValue, touchedInput, selected },
     helpers: { isSelected },
   } = createCombobox({
+    selected: selectedOptionsStore,
     forceVisible: true,
     multiple: true,
   });
@@ -43,33 +59,33 @@
   $: filteredRoles = $touchedInput
     ? sortedRoles.filter(({ name }) => {
         const normalizedInput = $inputValue.toLowerCase();
+        console.log($selected);
         return name.toLowerCase().includes(normalizedInput);
       })
     : sortedRoles;
+    // @ts-ignore
+  $: selectedRoles = $selected?.map(item => {
+    const { label, value } = item;
+    return value;
+});
 
-  $: selectedRoleStore.set(
-    filteredRoles
-  );
 </script>
 
 <div class="flex flex-col gap-1">
-  <label use:melt={$label} for="role-input">
-    <span class="text-sm font-medium text-magnum-900">Choose a role:</span>
-  </label>
 
   <div class="relative">
     <input
       use:melt={$input}
-      class="flex h-10 items-center justify-between rounded-lg bg-white px-3 pr-12 text-black"
+      class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
       placeholder="Role name"
     />
-    <div class="absolute right-2 top-1/2 z-10 -translate-y-1/2 text-magnum-900">
+    <!-- <div class="absolute right-2 top-1/2 z-10 -translate-y-1/2 text-magnum-900">
       {#if $open}
         <ChevronUp class="size-4" />
       {:else}
         <ChevronDown class="size-4" />
       {/if}
-    </div>
+    </div> -->
   </div>
 </div>
 {#if $open}
@@ -79,7 +95,7 @@
     transition:fly={{ duration: 150, y: -5 }}
   >
     <div
-      class="flex max-h-full flex-col gap-0 overflow-y-auto bg-white px-2 py-2 text-black"
+      class="flex max-h-full flex-col gap-0 overflow-y-auto "
     >
       {#each filteredRoles as role, index (index)}
         <li
@@ -87,11 +103,11 @@
             value: role,
             label: role.name,
           })}
-          class="relative cursor-pointer scroll-my-2 rounded-md py-2 pl-4 pr-4 data-[highlighted]:bg-magnum-200 data-[highlighted]:text-magnum-900"
+          class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
         >
           {#if $isSelected(role)}
-            <div class="check absolute left-2 top-1/2 z-10 text-magnum-900">
-              <Check class="size-4" />
+            <div class="check absolute left-2 top-1/2 z-10 ">
+              <Check class="size-2" />
             </div>
           {/if}
           <div class="pl-4">
@@ -111,7 +127,7 @@
 
 <style lang="postcss">
   .check {
-    @apply absolute left-2 top-1/2 text-magnum-500;
+    @apply absolute left-2 top-1/2 ;
     translate: 0 calc(-50% + 1px);
   }
 </style>
