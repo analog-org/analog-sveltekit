@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createTagsInput, createCombobox, melt } from "@melt-ui/svelte";
+  import {  createCombobox, melt } from "@melt-ui/svelte";
   import { fly } from "svelte/transition";
   import Check from "lucide-svelte/icons/check";
   import ChevronsUpDown from "lucide-svelte/icons/chevrons-up-down";
@@ -84,7 +84,7 @@
 </div>
 {#if $open}
   <ul
-    class="z-10 flex max-h-[300px] flex-col overflow-hidden rounded-lg border bg-popover p-2 text-popover-foreground shadow-md"
+    class="z-10 flex max-h-[300px] flex-col overflow-hidden rounded-lg border bg-popover p-4 text-popover-foreground shadow-md"
     use:melt={$menu}
     transition:fly={{ duration: 150, y: -5 }}
   >
@@ -97,7 +97,7 @@
             value: role,
             label: role.name,
           })}
-          class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+          class="relative flex cursor-default select-none items-center rounded-sm hover:bg-accent px-2 py-1.5 text-sm outline-none  "
         >
         <div class="flex flex-row gap-2">
           {#if $isSelected(role)}
@@ -105,7 +105,7 @@
               <Check class="size-2" />
             </div>
           {/if}
-          <div class="pl-4">
+          <div class="pl-8">
             <span class="font-medium">{role.name}</span>
           </div>
         </div>
