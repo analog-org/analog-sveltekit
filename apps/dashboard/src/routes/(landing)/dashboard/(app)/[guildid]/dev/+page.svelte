@@ -36,8 +36,7 @@
 
   <RoleInput bind:selectedRoles={selectedRole} roles={data?.roles} />
   <p>
-    Selected role: {selectedRole ? selectedRole[0]?.name : "None"}
-    {(selectedRole && selectedRole[0]?.color.toString(16).padStart(6, "0")) ?? ""}
+    Selected role: {selectedRole ? selectedRole?.map((roles)=> roles?.name).join(", ") : "None"}
   </p>
 
   <div class="w-52">
