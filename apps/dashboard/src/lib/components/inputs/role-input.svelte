@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createCombobox, melt } from "@melt-ui/svelte";
+  import { createTagsInput, createCombobox, melt } from "@melt-ui/svelte";
   import { fly } from "svelte/transition";
   import Check from "lucide-svelte/icons/check";
   import ChevronsUpDown from "lucide-svelte/icons/chevrons-up-down";
@@ -76,21 +76,15 @@
   <div class="relative">
     <input
       use:melt={$input}
-      class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+      class="flex h-10 w-[200px] rounded-md border bg-popover p-4 text-popover-foreground shadow-md px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+
       placeholder="Role name"
     />
-    <!-- <div class="absolute right-2 top-1/2 z-10 -translate-y-1/2 text-magnum-900">
-      {#if $open}
-        <ChevronUp class="size-4" />
-      {:else}
-        <ChevronDown class="size-4" />
-      {/if}
-    </div> -->
   </div>
 </div>
 {#if $open}
   <ul
-    class="z-10 flex max-h-[300px] flex-col overflow-hidden rounded-lg"
+    class="z-10 flex max-h-[300px] flex-col overflow-hidden rounded-lg border bg-popover p-2 text-popover-foreground shadow-md"
     use:melt={$menu}
     transition:fly={{ duration: 150, y: -5 }}
   >
@@ -105,14 +99,17 @@
           })}
           class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
         >
+        <div class="flex flex-row gap-2">
           {#if $isSelected(role)}
-            <div class="check absolute left-2 top-1/2 z-10 ">
+            <div class="check  ">
               <Check class="size-2" />
             </div>
           {/if}
           <div class="pl-4">
             <span class="font-medium">{role.name}</span>
           </div>
+        </div>
+          
         </li>
       {:else}
         <li
