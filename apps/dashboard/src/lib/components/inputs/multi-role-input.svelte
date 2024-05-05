@@ -57,6 +57,10 @@
     $inputValue = $selected?.map((value) => value?.label).join(", ")  ?? "";
   }
 
+  $: if ($open) {
+    $inputValue = '';
+  }
+
 
   $: filteredRoles = $touchedInput
     ? sortedRoles.filter(({ name }) => {
