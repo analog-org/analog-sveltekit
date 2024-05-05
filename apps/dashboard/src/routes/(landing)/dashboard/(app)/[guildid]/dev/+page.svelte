@@ -9,12 +9,15 @@
   import OldRoleInput from "$lib/components/inputs/role-input.svelte";
   import MultiRoleInput from "$lib/components/inputs/multi-role-input.svelte";
   import RoleInput from "$lib/components/inputs/role-input.svelte";
+  import MultiChannelInput from "$lib/components/inputs/multi-channel-input.svelte";
 
   import { Badge } from "$lib/components/ui/badge";
 
   let selectedChannel = writable<APIChannel | undefined>(undefined);
   let selectedRoles: APIRole[] | undefined = [];
   let selectedRole: APIRole | undefined;
+
+  let selectedChannels: APIChannel[] | undefined = [];
 
   import { Color, ColorInput } from "color-picker-svelte";
 
@@ -39,6 +42,18 @@
     {/each}
   {/if}
   <MultiRoleInput bind:selectedRoles roles={data?.roles} />
+
+  <MultiChannelInput bind:selectedChannels channels={data?.channels} />
+  {#if selectedChannels}
+    {#each selectedChannels as channel}
+      <Badge
+        class="bg-transparent"
+        style={`background: #${channel.color.toString(16).padStart(6, `${$mode === "dark" ? "f" : "0"}`)}`}
+      >
+        {channel.name}
+      </Badge>
+    {/each}
+  {/if}
 
   <RoleInput bind:selectedRole roles={data?.roles} />
   <Badge
