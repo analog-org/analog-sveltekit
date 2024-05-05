@@ -43,11 +43,7 @@
   });
 
   sortedRoles.sort((a, b) => a.position - b.position);
-  
-  $: if (!$open) {
-    // @ts-ignore
-    $inputValue = $selected?.label ?? '';
-  }
+
 
   $: filteredRoles = $touchedInput
     ? sortedRoles.filter(({ name }) => {
