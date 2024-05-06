@@ -48,9 +48,13 @@
     {#each selectedChannels as channel}
       <Badge
         class="bg-transparent"
-        
+        variant="default"
+        style={`background: #${channel?.id
+          .substring(channel.id?.length - 6, channel.id?.length)
+          .toString(16)
+          .padStart(6, `${$mode === "dark" ? "f" : "0"}`)}`}
       >
-        {channel.name}
+       # {channel.name}
       </Badge>
     {/each}
   {/if}
