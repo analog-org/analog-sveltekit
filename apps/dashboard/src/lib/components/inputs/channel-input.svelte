@@ -103,7 +103,7 @@
 
   $: if (!$open) {
     // @ts-ignore
-    $inputValue = $selected?.label ?? "";
+    $inputValue = `# ${$selected?.label}` ?? "";
   }
 
   $: if ($open) {
