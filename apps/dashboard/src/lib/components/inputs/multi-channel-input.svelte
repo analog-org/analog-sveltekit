@@ -22,14 +22,14 @@
   const selectedOptionsStore = writable<{ value: string; label: string }[]>([]);
 
   selectedChannelStore.subscribe(($selectedChannelStore) => {
-  return selectedOptionsStore.set(
-    $selectedChannelStore?.map((channel) => ({
-      value: channel.id,
-      label: channel.name || '', 
-      ...channel,
-    })) || []
-  );
-});
+    return selectedOptionsStore.set(
+      $selectedChannelStore?.map((channel) => ({
+        value: channel.name?.toLowerCase() || "",
+        label: channel.name || "",
+        ...channel,
+      })) || []
+    );
+  });
 
   const {
     elements: { menu, input, option, label },
@@ -106,18 +106,20 @@
     $inputValue = "";
   }
 
+  let filteredChannels: ChannelGroup[] = [];
+
   $: filteredChannels = $touchedInput
-    ? sortedChannels
-        .map((group) => group.items)
-        .flat()
-        .filter(({ name }) => {
-          const normalizedInput = $inputValue.toLowerCase();
-          return name?.toLowerCase().includes(normalizedInput);
-        })
+    ? sortedChannels.filter((group) =>
+        group.items.some((channel) =>
+          channel.name?.toLowerCase().includes($inputValue.toLowerCase())
+        )
+      )
     : sortedChannels;
-  // @ts-ignore
+
+    // @ts-ignore
   $: selectedChannels = $selected?.map((item) => {
     const { label, value } = item;
+    console.log(item);
     return value;
   });
 </script>
@@ -139,12 +141,12 @@
   >
     <div class="flex max-h-full flex-col gap-0 overflow-y-auto">
       {#each filteredChannels as group}
-      <p class="text-zinc-400 text-xs">{group.channel.name}</p>
+        <p class="text-zinc-400 text-xs">{group.channel.name}</p>
         {#each group.items as channel, index (index)}
           <li
             use:melt={$option({
               value: channel,
-              label: `${channel?.name}`,
+              label: channel?.name ?? "",
             })}
             class="relative flex cursor-default select-none items-center rounded-sm hover:bg-accent px-2 py-1.5 text-sm outline-none"
           >
@@ -161,7 +163,6 @@
           </li>
         {/each}
       {/each}
-      
     </div>
   </ul>
 {/if}
