@@ -1,17 +1,48 @@
 <script lang="ts">
+  import { createCombobox, melt } from "@melt-ui/svelte";
+  import { fly } from "svelte/transition";
   import Check from "lucide-svelte/icons/check";
   import ChevronsUpDown from "lucide-svelte/icons/chevrons-up-down";
+  import ChevronDown from "lucide-svelte/icons/chevron-down";
+  import ChevronUp from "lucide-svelte/icons/chevron-up";
   import * as Popover from "$lib/components/ui/popover/index.js";
   import * as Command from "$lib/components/ui/command/index.js";
   import { cn } from "$lib/utils.js";
   import { Button } from "$lib/components/ui/button/index.js";
   import { tick } from "svelte";
-  import { writable } from "svelte/store";
+  import { writable, derived } from "svelte/store";
+  import { mode } from "mode-watcher";
   import { ChannelType, type APIChannel } from "discord-api-types/v10";
+  import { CircleUser } from "lucide-svelte";
 
   export let channels: APIChannel[] = [];
+  export let selectedChannel: APIChannel | undefined;
 
-  const selectedChannelStore = writable<APIChannel | undefined>(undefined);
+  let selectedChannelStore = writable<APIChannel | undefined>(undefined);
+  const selectedOptionsStore = writable<{ value: string; label: string } | undefined>(undefined);
+
+  selectedChannelStore.subscribe(($selectedChannelStore) => {
+    if ($selectedChannelStore) {
+      selectedOptionsStore.set({
+        value: $selectedChannelStore?.id || "",
+        label: $selectedChannelStore.name || "",
+        ...$selectedChannelStore,
+      });
+    } else {
+      selectedOptionsStore.set(undefined);
+    }
+  });
+
+  const {
+    elements: { menu, input, option, label },
+    states: { open, inputValue, touchedInput, selected },
+    helpers: { isSelected },
+  } = createCombobox<APIChannel>({
+    // @ts-ignore
+    selected: selectedOptionsStore,
+    forceVisible: true,
+    multiple: false,
+  });
 
   type ChannelGroup = {
     channel: APIChannel;
@@ -70,74 +101,75 @@
     return 0;
   });
 
-  export const selectedChannel = {
-    subscribe: selectedChannelStore.subscribe,
-  };
-
-  let open = false;
-  let name = "";
-
-  $: selectedChannelStore.set(
-    sortedChannels
-      .map((group) => group.items)
-      .flat()
-      .find((item) => item.name === name) ?? undefined
-  );
-
-
-  function closeAndFocusTrigger(triggerId: string) {
-    open = false;
-    tick().then(() => {
-      document.getElementById(triggerId)?.focus();
-    });
+  $: if (!$open) {
+    // @ts-ignore
+    $inputValue = $selected?.label ?? "";
   }
 
- 
+  $: if ($open) {
+    $inputValue = "";
+  }
+
+  let filteredChannels: ChannelGroup[] = [];
+
+  $: filteredChannels = $touchedInput
+    ? sortedChannels.filter((group) =>
+        group.items.some((channel) =>
+          channel.name?.toLowerCase().includes($inputValue.toLowerCase())
+        )
+      )
+    : sortedChannels;
+
+  // @ts-ignore
+  $: selectedChannel = $selected?.value;
 </script>
 
-<Popover.Root bind:open let:ids>
-  <Popover.Trigger asChild let:builder>
-    <Button
-      builders={[builder]}
-      variant="outline"
-      role="combobox"
-      aria-expanded={open}
-      class="w-[200px] justify-between "
-    >
-      <p class="truncate">{$selectedChannelStore?.name ?? "Select a channel..."}</p>
-
-      <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
-    </Button>
-  </Popover.Trigger>
-  <Popover.Content class="w-[200px] p-0">
-    <Command.Root class="">
-      <Command.Input placeholder="Search Channels..." />
-      <Command.Empty>No Channels found.</Command.Empty>
-      <div class="h-56 overflow-auto">
-        {#each sortedChannels as group (group.channel.id)}
-          <Command.Group>
-            <p class="text-zinc-400 text-xs">{group.channel.name}</p>
-
-            {#each group.items as item (item.id)}
-              <Command.Item
-                value={`${item.name}`}
-                onSelect={(currentValue) => {
-                  name = currentValue;
-                  closeAndFocusTrigger(ids.trigger);
-                }}
-              >
-                <Check
-                  class={cn(
-                    "mr-2 h-4 w-4",
-                    name !== item.name && "text-transparent"
-                  )}
-                />
-                <p class="truncate"># {item.name}</p>
-              </Command.Item>
-            {/each}
-          </Command.Group>
+<div class="flex flex-col gap-1">
+  <div class="relative">
+    <input
+      use:melt={$input}
+      class="flex h-10 w-[200px] rounded-md border bg-popover p-4 text-popover-foreground shadow-md px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+      placeholder={$open ? "Search for a channel" : "Select a channel"}
+    />
+  </div>
+</div>
+{#if $open}
+  <ul
+    class="z-10 flex max-h-[300px] flex-col overflow-hidden rounded-lg border bg-popover p-4 text-popover-foreground shadow-md"
+    use:melt={$menu}
+    transition:fly={{ duration: 150, y: -5 }}
+  >
+    <div class="flex max-h-full flex-col gap-0 overflow-y-auto">
+      {#each filteredChannels as group}
+        <p class="text-zinc-400 text-xs">{group.channel.name}</p>
+        {#each group.items as channel, index (index)}
+          <li
+            use:melt={$option({
+              value: channel,
+              label: channel?.name ?? "",
+            })}
+            class="relative flex cursor-default select-none items-center rounded-sm hover:bg-accent px-2 py-1.5 text-sm outline-none"
+          >
+            <div class="flex flex-row gap-2">
+              {#if $isSelected(channel)}
+                <div class="check">
+                  <Check class="size-2" />
+                </div>
+              {/if}
+              <div class="pl-8">
+                <span class="font-medium"># {channel.name}</span>
+              </div>
+            </div>
+          </li>
         {/each}
-      </div>
-    </Command.Root>
-  </Popover.Content>
-</Popover.Root>
+      {/each}
+    </div>
+  </ul>
+{/if}
+
+<style lang="postcss">
+  .check {
+    @apply absolute left-2 top-1/2;
+    translate: 0 calc(-50% + 1px);
+  }
+</style>
