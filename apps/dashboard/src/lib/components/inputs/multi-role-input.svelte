@@ -65,10 +65,10 @@
   $: filteredRoles = $touchedInput
     ? sortedRoles.filter(({ name }) => {
         const normalizedInput = $inputValue.toLowerCase();
-        console.log($selected);
         return name.toLowerCase().includes(normalizedInput);
       })
     : sortedRoles;
+
   // @ts-ignore
   $: selectedRoles = $selected?.map((item) => {
     const { label, value } = item;
