@@ -1557,6 +1557,7 @@ damerau-levenshtein@^1.0.8:
     color-picker-svelte "^1.4.1"
     discord-api-types "^0.37.83"
     discord.js "^14.15.2"
+    formsnap "^1.0.0"
     lucide-svelte "^0.378.0"
     mode-watcher "^0.3.0"
     svelte-motion "^0.12.2"
