@@ -14,6 +14,8 @@ import { BitField, enumToObject } from "@sapphire/bitfield";
 import { loadUserInfo } from "$lib/utils";
 
 export const load: LayoutServerLoad = async ({ locals, params }) => {
+  const session = await locals.auth();
+  if (!session?.user) throw redirect(303, "/auth/signin");
   const guildId = params.guildid;
   const userInfo = await loadUserInfo({ locals }, DISCORD_TOKEN);
   const mutualGuilds = userInfo?.mutualGuilds;
@@ -22,9 +24,11 @@ export const load: LayoutServerLoad = async ({ locals, params }) => {
 
   const botRest = new REST({ authPrefix: "Bot" }).setToken(DISCORD_TOKEN);
 
-  const guild = await botRest.get(Routes.guild(guildId)).then((res) => res as APIGuild);
+  const guild = await botRest
+    .get(Routes.guild(guildId))
+    .then((res) => res as APIGuild);
   const guildIcon = `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;
-  
+
   const guildAccent = await Vibrant.from(guildIcon)
     .getPalette()
     .then((palette) => palette.Vibrant?.hex);
