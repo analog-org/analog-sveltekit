@@ -9,6 +9,8 @@
   import RoleInput from "$lib/components/inputs/role-input.svelte";
   import MultiChannelInput from "$lib/components/inputs/multi-channel-input.svelte";
 
+  import MessageForm from "$lib/components/forms/message-form.svelte";
+
   import { Badge } from "$lib/components/ui/badge";
   let selectedRoles: APIRole[] | undefined = [];
   let selectedRole: APIRole | undefined;
@@ -82,4 +84,8 @@
       selected color: {color.toHexString()}
     </p>
   </div>
+
+  <h1 class="text-2xl">Send a Message</h1>
+  <MessageForm data={data.form} />
+
 </center>
