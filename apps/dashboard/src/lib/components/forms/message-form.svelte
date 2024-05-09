@@ -3,7 +3,7 @@
 
   import * as Form from "$lib/components/ui/form";
   import { Input } from "$lib/components/ui/input";
-  import { TextArea } from "$lib/components/ui/textarea";
+  import { Textarea } from "$lib/components/ui/textarea";
   import { messageSchema, type MessageSchema } from "$lib/schemas";
   import {
     type SuperValidated,
@@ -34,7 +34,7 @@
   <Form.Field {form} name={`content`}>
     <Form.Control let:attrs>
       <Form.Label>Content</Form.Label>
-      <Input
+      <Textarea
         {...attrs}
         placeholder="Enter messaeg content"
         bind:value={$formData.content}
@@ -57,7 +57,7 @@
     <Form.Field {form} name={`description`}>
       <Form.Control let:attrs>
         <Form.Label>Description</Form.Label>
-        <Input
+        <Textarea
           {...attrs}
           placeholder="Enter description"
           bind:value={$formData.embeds[i].description}
