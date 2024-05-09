@@ -3,6 +3,7 @@
 
   import * as Form from "$lib/components/ui/form";
   import { Input } from "$lib/components/ui/input";
+  import { TextArea } from "$lib/components/ui/textarea";
   import { messageSchema, type MessageSchema } from "$lib/schemas";
   import {
     type SuperValidated,
