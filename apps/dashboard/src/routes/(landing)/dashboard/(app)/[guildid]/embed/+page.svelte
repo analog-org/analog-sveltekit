@@ -7,7 +7,5 @@
 
 <center>
     Hello this is a test
-
-    <ChannelInput channels={data?.channels} />
 </center>
 
