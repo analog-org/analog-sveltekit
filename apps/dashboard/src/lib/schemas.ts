@@ -60,12 +60,12 @@ export const Embed = z
     provider: EmbedProvider.optional(),
     author: EmbedAuthor.optional(),
     fields: z.array(EmbedField).max(25).optional(),
-  })
+  });
 
 export const messageSchema = z.object({
   content: z.string().max(2000).optional(),
   channel: z.string(),
-  embeds: z.array(Embed).max(10).optional(),
+  embeds: z.array(Embed).max(10).optional().default([{ title: ""}]),
 });
 
 export type MessageSchema = typeof messageSchema;
