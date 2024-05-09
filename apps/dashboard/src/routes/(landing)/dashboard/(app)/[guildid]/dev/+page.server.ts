@@ -50,21 +50,25 @@ export const actions: Actions = {
   default: async (event) => {
     const guildId = event.params.guildid;
     const guild = await botRest
-    .get(Routes.guild(guildId))
-    .then((res) => res as APIGuild);
-    
-    const form = await superValidate(event, zod(messageSchema));
+      .get(Routes.guild(guildId))
+      .then((res) => res as APIGuild);
+
+    const channels = await botRest
+      .get(Routes.guildChannels(guild?.id))
+      .then((res) => res as APIChannel[]);
+
+    const form = await superValidate(event, zod(messageSchema), {
+      defaults: {
+        embeds: [{ title: "sup" }],
+        channel: `${channels?.find((channel) => channel.type === 0)?.id}`,
+      },
+    });
     if (!form.valid) {
       return fail(400, {
         form,
       });
     }
-    const channels = await botRest
-      .get(Routes.guildChannels(guild?.id))
-      .then((res) => res as APIChannel[]);
-    const roles = await botRest
-      .get(Routes.guildRoles(guild?.id))
-      .then((res) => res as APIRole[]);
+
     await botRest
       .post(
         Routes.channelMessages(
@@ -73,6 +77,7 @@ export const actions: Actions = {
         {
           body: {
             content: `<@274973338676494347> ${form.data.content}`,
+            embeds: form.data.embeds,
           },
         }
       )
