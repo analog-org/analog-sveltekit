@@ -234,10 +234,10 @@
 "@humanwhocodes/object-schema@^1.2.0":
   version "1.2.1"
 
-"@internationalized/date@^3.5.0", "@internationalized/date@^3.5.1":
-  version "3.5.1"
-  resolved "https://registry.npmjs.org/@internationalized/date/-/date-3.5.1.tgz"
-  integrity sha512-LUQIfwU9e+Fmutc/DpRTGXSdgYZLBegi4wygCWDSVmUdLTaMHsQyASDiJtREwanwKuQLq0hY76fCJ9J/9I2xOQ==
+"@internationalized/date@^3.5.0", "@internationalized/date@^3.5.1", "@internationalized/date@^3.5.3":
+  version "3.5.3"
+  resolved "https://registry.npmjs.org/@internationalized/date/-/date-3.5.3.tgz"
+  integrity sha512-X9bi8NAEHAjD8yzmPYT2pdJsbe+tYSEBAfowtlxJVJdZR3aK8Vg7ZUT1Fm5M47KLzp/M1p1VwAaeSma3RT7biw==
   dependencies:
     "@swc/helpers" "^0.5.0"
 
