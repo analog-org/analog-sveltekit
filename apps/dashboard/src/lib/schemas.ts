@@ -65,7 +65,7 @@ export const Embed = z
 export const messageSchema = z.object({
   content: z.string().max(2000).optional(),
   channel: z.string(),
-  embeds: z.array(Embed).max(10).optional().default([{ title: ""}]),
+  embeds: z.array(Embed).max(10).optional().default([{ }]),
 });
 
 export type MessageSchema = typeof messageSchema;
