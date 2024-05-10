@@ -15,7 +15,7 @@
   export let message: SuperValidated<Infer<MessageSchema>>;
 </script>
 
-<div>
+<div class="z-0">
   <discord-messages class="rounded-xl">
     <discord-message
       author={bot?.username}
@@ -26,13 +26,13 @@
       {/if}
       {#if message.embeds}
         {#each message.embeds as embed}
-          <discord-embed
-            embed-title={embed.title}
-            color={embed.color}
-          >
-          <discord-embed-description slot="description">
-            {embed.description}
-          </discord-embed-description>
+          <discord-embed embed-title={embed.title} color={embed.color}>
+            {#if embed.description}
+              <discord-embed-description slot="description">
+                {embed.description}
+              </discord-embed-description>
+            {/if}
+
             {#if embed.fields}
               {#each embed.fields as field}
                 <discord-field
