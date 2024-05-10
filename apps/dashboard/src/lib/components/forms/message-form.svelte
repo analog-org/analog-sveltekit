@@ -1,6 +1,19 @@
 <script lang="ts">
   import Button from "../ui/button/button.svelte";
-
+  import CalendarIcon from "lucide-svelte/icons/calendar";
+  import {
+    CalendarDate,
+    DateFormatter,
+    type DateValue,
+    getLocalTimeZone,
+    parseDate,
+    today,
+  } from "@internationalized/date";
+  import { browser } from "$app/environment";
+  import { page } from "$app/stores";
+  import { cn } from "$lib/utils.js";
+  import { Calendar } from "$lib/components/ui/calendar/index.js";
+  import * as Popover from "$lib/components/ui/popover/index.js";
   import * as Form from "$lib/components/ui/form";
   import { Input } from "$lib/components/ui/input";
   import { Textarea } from "$lib/components/ui/textarea";
@@ -12,6 +25,8 @@
   } from "sveltekit-superforms";
   import { zodClient } from "sveltekit-superforms/adapters";
   import MessagePreview from "./message-preview.svelte";
+  import { buttonVariants } from "../ui/button";
+  import DropdownMenuShortcut from "../ui/dropdown-menu/dropdown-menu-shortcut.svelte";
 
   export let data: SuperValidated<Infer<MessageSchema>>;
 
@@ -29,12 +44,23 @@
   }
 
   const { form: formData, enhance } = form;
+
+  const df = new DateFormatter("en-US", {
+    dateStyle: "long"
+  });
+  let placeholder: DateValue = today(getLocalTimeZone());
+  let values: (DateValue | undefined)[] = [];
+
+$: {
+  values = $formData.embeds.map(embed => embed.timestamp ? parseDate(`${embed.timestamp}`) : undefined);
+}
+  
 </script>
 
-<div class="flex flex-row">
+<div class="flex flex-row gap-5">
   <div>
     <form method="POST" use:enhance>
-      <Form.Field {form} name={`content`}>
+      <Form.Field {form} name="channel">
         <Form.Control let:attrs>
           <Form.Label>Content</Form.Label>
           <Textarea
@@ -43,66 +69,95 @@
             bind:value={$formData.content}
           />
         </Form.Control>
+        <Form.FieldErrors />
       </Form.Field>
 
-      {#each $formData.embeds as _, i}
-        <Form.Field {form} name={`title`}>
-          <Form.Control let:attrs>
-            <Form.Label>Title</Form.Label>
-            <Input
-              {...attrs}
-              placeholder="Enter title"
-              bind:value={$formData.embeds[i].title}
-            />
-          </Form.Control>
-        </Form.Field>
+      <Form.Field {form} name="embeds"
+        >{#each $formData.embeds as _, i}
+          <Form.ElementField {form} name="content">
+            <Form.Control let:attrs>
+              <Form.Label>Title</Form.Label>
+              <Input
+                {...attrs}
+                placeholder="Enter title"
+                bind:value={$formData.embeds[i].title}
+              />
+            </Form.Control>
+          </Form.ElementField>
 
-        <Form.Field {form} name={`description`}>
-          <Form.Control let:attrs>
-            <Form.Label>Description</Form.Label>
-            <Textarea
-              {...attrs}
-              placeholder="Enter description"
-              bind:value={$formData.embeds[i].description}
-            />
-          </Form.Control>
-        </Form.Field>
+          <Form.ElementField {form} name={`description`}>
+            <Form.Control let:attrs>
+              <Form.Label>Description</Form.Label>
+              <Textarea
+                {...attrs}
+                placeholder="Enter description"
+                bind:value={$formData.embeds[i].description}
+              />
+            </Form.Control>
+          </Form.ElementField>
 
-        <Form.Field {form} name={`url`}>
-          <Form.Control let:attrs>
-            <Form.Label>URL</Form.Label>
-            <Input
-              {...attrs}
-              placeholder="Enter URL"
-              bind:value={$formData.embeds[i].url}
-            />
-          </Form.Control>
-        </Form.Field>
+          <Form.ElementField {form} name={`url`}>
+            <Form.Control let:attrs>
+              <Form.Label>URL</Form.Label>
+              <Input
+                {...attrs}
+                placeholder="Enter URL"
+                bind:value={$formData.embeds[i].url}
+              />
+            </Form.Control>
+          </Form.ElementField>
 
-        <Form.Field {form} name={`timestamp`}>
-          <Form.Control let:attrs>
-            <Form.Label>Timestamp</Form.Label>
-            <Input
-              {...attrs}
-              placeholder="Enter timestamp"
-              bind:value={$formData.embeds[i].timestamp}
-            />
-          </Form.Control>
-        </Form.Field>
+          <Form.ElementField {form} name={`timestamp`}>
+            <Form.Control let:attrs>
+              <Form.Label>Timestamp</Form.Label>
+              <Popover.Root>
+                <Popover.Trigger
+                  {...attrs}
+                  class={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "w-[280px] justify-start pl-4 text-left font-normal",
+                    !values[i] && "text-muted-foreground"
+                  )}
+                >
+                    {values[i] ? df.format(values[i]?.toDate(getLocalTimeZone())) : "Pick a date"}
+                  <CalendarIcon class="ml-auto h-4 w-4 opacity-50" />
+                </Popover.Trigger>
+                <Popover.Content class="w-auto p-0" side="top">
+                  <Calendar
+                    value={values[i]}
+                    bind:placeholder
+                    minValue={new CalendarDate(1900, 1, 1)}
+                    maxValue={today(getLocalTimeZone())}
+                    calendarLabel="Date of birth"
+                    initialFocus
+                    onValueChange={(v) => {
+                      if (v) {
+                        $formData.embeds[i].timestamp = v.toString();
+                      } else {
+                        $formData.embeds[i].timestamp = "";
+                      }
+                    }}
+                  />
+                </Popover.Content>
+              </Popover.Root>
+            </Form.Control>
+          </Form.ElementField>
 
-        <Form.Field {form} name={`color`}>
-          <Form.Control let:attrs>
-            <Form.Label>Color</Form.Label>
-            <Input
-              {...attrs}
-              placeholder="Enter color"
-              bind:value={$formData.embeds[i].color}
-            />
-          </Form.Control>
-        </Form.Field>
+          <Form.ElementField {form} name={`color`}>
+            <Form.Control let:attrs>
+              <Form.Label>Color</Form.Label>
+              <Input
+                {...attrs}
+                placeholder="Enter color"
+                bind:value={$formData.embeds[i].color}
+              />
+            </Form.Control>
+          </Form.ElementField>
 
-        <Button on:click={addUrl}>Add Embed</Button>
-      {/each}
+          <Button on:click={addUrl}>Add Embed</Button>
+        {/each}
+        <Form.FieldErrors />
+      </Form.Field>
 
       <Form.Button>Send Message</Form.Button>
     </form>
