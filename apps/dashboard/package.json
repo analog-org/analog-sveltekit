@@ -37,6 +37,7 @@
 		"@auth/core": "^0.30.0",
 		"@auth/sveltekit": "^1.0.1",
 		"@discordjs/rest": "^2.3.0",
+		"@skyra/discord-components-core": "^4.0.0-alpha.18",
 		"@tailwindcss/typography": "^0.5.13",
 		"bits-ui": "^0.21.7",
 		"clsx": "^2.1.1",
