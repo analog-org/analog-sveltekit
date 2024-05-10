@@ -11,6 +11,7 @@
     superForm,
   } from "sveltekit-superforms";
   import { zodClient } from "sveltekit-superforms/adapters";
+  import MessagePreview from "./message-preview.svelte";
 
   export let data: SuperValidated<Infer<MessageSchema>>;
 
@@ -30,76 +31,83 @@
   const { form: formData, enhance } = form;
 </script>
 
-<form method="POST" use:enhance>
-  <Form.Field {form} name={`content`}>
-    <Form.Control let:attrs>
-      <Form.Label>Content</Form.Label>
-      <Textarea
-        {...attrs}
-        placeholder="Enter messaeg content"
-        bind:value={$formData.content}
-      />
-    </Form.Control>
-  </Form.Field>
+<div class="flex flex-row">
+  <div>
+    <form method="POST" use:enhance>
+      <Form.Field {form} name={`content`}>
+        <Form.Control let:attrs>
+          <Form.Label>Content</Form.Label>
+          <Textarea
+            {...attrs}
+            placeholder="Enter messaeg content"
+            bind:value={$formData.content}
+          />
+        </Form.Control>
+      </Form.Field>
 
-  {#each $formData.embeds as _, i}
-    <Form.Field {form} name={`title`}>
-      <Form.Control let:attrs>
-        <Form.Label>Title</Form.Label>
-        <Input
-          {...attrs}
-          placeholder="Enter title"
-          bind:value={$formData.embeds[i].title}
-        />
-      </Form.Control>
-    </Form.Field>
+      {#each $formData.embeds as _, i}
+        <Form.Field {form} name={`title`}>
+          <Form.Control let:attrs>
+            <Form.Label>Title</Form.Label>
+            <Input
+              {...attrs}
+              placeholder="Enter title"
+              bind:value={$formData.embeds[i].title}
+            />
+          </Form.Control>
+        </Form.Field>
 
-    <Form.Field {form} name={`description`}>
-      <Form.Control let:attrs>
-        <Form.Label>Description</Form.Label>
-        <Textarea
-          {...attrs}
-          placeholder="Enter description"
-          bind:value={$formData.embeds[i].description}
-        />
-      </Form.Control>
-    </Form.Field>
+        <Form.Field {form} name={`description`}>
+          <Form.Control let:attrs>
+            <Form.Label>Description</Form.Label>
+            <Textarea
+              {...attrs}
+              placeholder="Enter description"
+              bind:value={$formData.embeds[i].description}
+            />
+          </Form.Control>
+        </Form.Field>
 
-    <Form.Field {form} name={`url`}>
-      <Form.Control let:attrs>
-        <Form.Label>URL</Form.Label>
-        <Input
-          {...attrs}
-          placeholder="Enter URL"
-          bind:value={$formData.embeds[i].url}
-        />
-      </Form.Control>
-    </Form.Field>
+        <Form.Field {form} name={`url`}>
+          <Form.Control let:attrs>
+            <Form.Label>URL</Form.Label>
+            <Input
+              {...attrs}
+              placeholder="Enter URL"
+              bind:value={$formData.embeds[i].url}
+            />
+          </Form.Control>
+        </Form.Field>
 
-    <Form.Field {form} name={`timestamp`}>
-      <Form.Control let:attrs>
-        <Form.Label>Timestamp</Form.Label>
-        <Input
-          {...attrs}
-          placeholder="Enter timestamp"
-          bind:value={$formData.embeds[i].timestamp}
-        />
-      </Form.Control>
-    </Form.Field>
+        <Form.Field {form} name={`timestamp`}>
+          <Form.Control let:attrs>
+            <Form.Label>Timestamp</Form.Label>
+            <Input
+              {...attrs}
+              placeholder="Enter timestamp"
+              bind:value={$formData.embeds[i].timestamp}
+            />
+          </Form.Control>
+        </Form.Field>
 
-    <Form.Field {form} name={`color`}>
-      <Form.Control let:attrs>
-        <Form.Label>Color</Form.Label>
-        <Input
-          {...attrs}
-          placeholder="Enter color"
-          bind:value={$formData.embeds[i].color}
-        />
-      </Form.Control>
-    </Form.Field>
+        <Form.Field {form} name={`color`}>
+          <Form.Control let:attrs>
+            <Form.Label>Color</Form.Label>
+            <Input
+              {...attrs}
+              placeholder="Enter color"
+              bind:value={$formData.embeds[i].color}
+            />
+          </Form.Control>
+        </Form.Field>
 
-    <Button on:click={addUrl}>Add Embed</Button>
-  {/each}
+        <Button on:click={addUrl}>Add Embed</Button>
+      {/each}
 
-  <Form.Button>Send Message</Form.Button>
-</form>
+      <Form.Button>Send Message</Form.Button>
+    </form>
+  </div>
+  <div>
+    <MessagePreview message={$formData} />
+  </div>
+</div>
