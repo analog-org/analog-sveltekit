@@ -27,6 +27,8 @@
   import MessagePreview from "./message-preview.svelte";
   import { buttonVariants } from "../ui/button";
   import DropdownMenuShortcut from "../ui/dropdown-menu/dropdown-menu-shortcut.svelte";
+  import { onMount } from "svelte";
+  import { Color, ColorInput } from "color-picker-svelte";
 
   export let data: SuperValidated<Infer<MessageSchema>>;
 
@@ -46,21 +48,35 @@
   const { form: formData, enhance } = form;
 
   const df = new DateFormatter("en-US", {
-    dateStyle: "long"
+    dateStyle: "long",
   });
   let placeholder: DateValue = today(getLocalTimeZone());
   let values: (DateValue | undefined)[] = [];
 
-$: {
-  values = $formData.embeds.map(embed => embed.timestamp ? parseDate(`${embed.timestamp}`) : undefined);
-}
-  
+  let colors = Array.from({ length: 10 }, () => new Color("#000000"));
+
+  onMount(() => {
+    colors = colors.map(() => {
+      let color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+      return new Color(color);
+    });
+  });
+
+  $: {
+    values = $formData.embeds.map((embed) =>
+      embed.timestamp ? parseDate(`${embed.timestamp}`) : undefined
+    );
+  }
+
+  $: $formData.embeds.forEach((embed, i) => {
+    embed.color = parseInt(colors[i].toHexString().slice(1), 16);
+  });
 </script>
 
 <div class="flex flex-row gap-5">
   <div>
     <form method="POST" use:enhance>
-      <Form.Field {form} name="channel">
+      <Form.Field {form} name="content">
         <Form.Control let:attrs>
           <Form.Label>Content</Form.Label>
           <Textarea
@@ -72,9 +88,21 @@ $: {
         <Form.FieldErrors />
       </Form.Field>
 
+      <Form.Field {form} name="channel">
+        <Form.Control let:attrs>
+          <Form.Label>Content</Form.Label>
+          <Input
+            {...attrs}
+            placeholder="Enter messaeg content"
+            bind:value={$formData.channel}
+          />
+        </Form.Control>
+        <Form.FieldErrors />
+      </Form.Field>
+
       <Form.Field {form} name="embeds"
         >{#each $formData.embeds as _, i}
-          <Form.ElementField {form} name="content">
+          <Form.ElementField {form} name="embeds[{i}].title">
             <Form.Control let:attrs>
               <Form.Label>Title</Form.Label>
               <Input
@@ -83,9 +111,10 @@ $: {
                 bind:value={$formData.embeds[i].title}
               />
             </Form.Control>
+            <Form.FieldErrors />
           </Form.ElementField>
 
-          <Form.ElementField {form} name={`description`}>
+          <Form.ElementField {form} name="embeds[{i}].description">
             <Form.Control let:attrs>
               <Form.Label>Description</Form.Label>
               <Textarea
@@ -94,9 +123,10 @@ $: {
                 bind:value={$formData.embeds[i].description}
               />
             </Form.Control>
+            <Form.FieldErrors />
           </Form.ElementField>
 
-          <Form.ElementField {form} name={`url`}>
+          <Form.ElementField {form} name="embeds[{i}].url">
             <Form.Control let:attrs>
               <Form.Label>URL</Form.Label>
               <Input
@@ -105,9 +135,10 @@ $: {
                 bind:value={$formData.embeds[i].url}
               />
             </Form.Control>
+            <Form.FieldErrors />
           </Form.ElementField>
 
-          <Form.ElementField {form} name={`timestamp`}>
+          <Form.ElementField {form} name="embeds[{i}].timestamp">
             <Form.Control let:attrs>
               <Form.Label>Timestamp</Form.Label>
               <Popover.Root>
@@ -119,7 +150,9 @@ $: {
                     !values[i] && "text-muted-foreground"
                   )}
                 >
-                    {values[i] ? df.format(values[i]?.toDate(getLocalTimeZone())) : "Pick a date"}
+                  {values[i]
+                    ? df.format(values[i]?.toDate(getLocalTimeZone()))
+                    : "Pick a date"}
                   <CalendarIcon class="ml-auto h-4 w-4 opacity-50" />
                 </Popover.Trigger>
                 <Popover.Content class="w-auto p-0" side="top">
@@ -141,17 +174,18 @@ $: {
                 </Popover.Content>
               </Popover.Root>
             </Form.Control>
+            <Form.FieldErrors />
           </Form.ElementField>
 
-          <Form.ElementField {form} name={`color`}>
+          <Form.ElementField {form} name="embeds[{i}].color">
             <Form.Control let:attrs>
               <Form.Label>Color</Form.Label>
-              <Input
-                {...attrs}
-                placeholder="Enter color"
-                bind:value={$formData.embeds[i].color}
+              <ColorInput
+                bind:color={colors[i]}
+                title={colors[i].toHexString()}
               />
             </Form.Control>
+            <Form.FieldErrors />
           </Form.ElementField>
 
           <Button on:click={addUrl}>Add Embed</Button>
