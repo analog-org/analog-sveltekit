@@ -36,8 +36,8 @@
             {#if embed.fields}
               {#each embed.fields as field}
                 <discord-field
-                  title={field.title}
-                  description={field.description}
+                  title={field.name}
+                  description={field.value}
                   inline={field.inline}
                 />
               {/each}

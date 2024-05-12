@@ -29,6 +29,11 @@
   import DropdownMenuShortcut from "../ui/dropdown-menu/dropdown-menu-shortcut.svelte";
   import { onMount } from "svelte";
   import { Color, ColorInput } from "color-picker-svelte";
+  import ChannelInput from "../inputs/channel-input.svelte";
+  import { type APIChannel } from "discord-api-types/v10";
+
+  const channel = $page.data.channels as APIChannel[];
+  let selectedChannel: APIChannel | undefined;
 
   export let data: SuperValidated<Infer<MessageSchema>>;
 
@@ -54,7 +59,6 @@
   let values: (DateValue | undefined)[] = [];
 
   let colors = Array.from({ length: 10 }, () => new Color("#000000"));
-  
 
   onMount(() => {
     colors = colors.map(() => {
@@ -67,12 +71,12 @@
     values = $formData.embeds.map((embed) =>
       embed.timestamp ? parseDate(`${embed.timestamp}`) : undefined
     );
+    $formData.channel = `${selectedChannel?.id}`
   }
 
   function updateColor(i: number, color: Color) {
     $formData.embeds[i].color = parseInt(color.toHexString().slice(1), 16);
   }
-
 </script>
 
 <div class="flex flex-row gap-5">
@@ -92,12 +96,12 @@
 
       <Form.Field {form} name="channel">
         <Form.Control let:attrs>
-          <Form.Label>Content</Form.Label>
-          <Input
-            {...attrs}
-            placeholder="Enter messaeg content"
-            bind:value={$formData.channel}
+          <Form.Label>Channel</Form.Label>
+          <ChannelInput
+            bind:selectedChannel
+            channels={channel}
           />
+          
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
@@ -200,6 +204,7 @@
     </form>
   </div>
   <div>
+    <h1 class="text-2xl">Sent to {selectedChannel?.name} ({$formData.channel})</h1>
     <MessagePreview message={$formData} />
   </div>
 </div>

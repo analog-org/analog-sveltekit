@@ -26,18 +26,6 @@ export const load = (async ({ parent }) => {
   const roles = await botRest
     .get(Routes.guildRoles(guild?.id))
     .then((res) => res as APIRole[]);
-  /* await botRest.post(
-    Routes.channelMessages(
-      `${channels?.find((channel) => channel.type === 0)?.id}`
-    ),
-    {
-      body: {
-        content: "<@274973338676494347> Loaded the page!",
-        embeds: [exampleEmbed.toJSON()],
-      },
-    }
-  ).catch(console.error); */
-  //console.log(roles)
 
   return {
     channels,
@@ -58,10 +46,6 @@ export const actions: Actions = {
       .then((res) => res as APIChannel[]);
 
     const form = await superValidate(event, zod(messageSchema), {
-      defaults: {
-        embeds: [{ title: "sup" }],
-        channel: `${channels?.find((channel) => channel.type === 0)?.id}`,
-      },
     });
     if (!form.valid) {
       return fail(400, {
@@ -73,7 +57,7 @@ export const actions: Actions = {
       await botRest
       .post(
         Routes.channelMessages(
-          `${channels?.find((channel) => channel.type === 0)?.id}`
+          form.data.channel
         ),
         {
           body: {
@@ -86,7 +70,7 @@ export const actions: Actions = {
       await botRest
       .post(
         Routes.channelMessages(
-          `${channels?.find((channel) => channel.type === 0)?.id}`
+          form.data.channel
         ),
         {
           body: {
