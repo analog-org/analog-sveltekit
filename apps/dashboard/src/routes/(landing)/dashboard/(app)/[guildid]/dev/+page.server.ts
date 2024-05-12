@@ -69,18 +69,35 @@ export const actions: Actions = {
       });
     }
 
-    await botRest
+    if (Object.keys(form.data.embeds[0]).length === 0) {
+      await botRest
       .post(
         Routes.channelMessages(
           `${channels?.find((channel) => channel.type === 0)?.id}`
         ),
         {
           body: {
-            content: `<@274973338676494347> ${form.data.content}`,
+            content: `<@274973338676494347> ${form.data?.content}`,
+          },
+        }
+      )
+      .catch(console.error);
+    } else {
+      await botRest
+      .post(
+        Routes.channelMessages(
+          `${channels?.find((channel) => channel.type === 0)?.id}`
+        ),
+        {
+          body: {
+            content: `<@274973338676494347> ${form.data?.content}`,
             embeds: form.data.embeds,
           },
         }
       )
       .catch(console.error);
+    }
+
+    
   },
 };
