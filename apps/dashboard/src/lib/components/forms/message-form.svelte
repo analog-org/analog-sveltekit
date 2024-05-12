@@ -54,6 +54,7 @@
   let values: (DateValue | undefined)[] = [];
 
   let colors = Array.from({ length: 10 }, () => new Color("#000000"));
+  
 
   onMount(() => {
     colors = colors.map(() => {
@@ -68,9 +69,10 @@
     );
   }
 
-  $: $formData.embeds.forEach((embed, i) => {
-    embed.color = parseInt(colors[i].toHexString().slice(1), 16);
-  });
+  function updateColor(i: number, color: Color) {
+    $formData.embeds[i].color = parseInt(color.toHexString().slice(1), 16);
+  }
+
 </script>
 
 <div class="flex flex-row gap-5">
@@ -181,6 +183,7 @@
             <Form.Control let:attrs>
               <Form.Label>Color</Form.Label>
               <ColorInput
+                onInput={() => updateColor(i, colors[i])}
                 bind:color={colors[i]}
                 title={colors[i].toHexString()}
               />

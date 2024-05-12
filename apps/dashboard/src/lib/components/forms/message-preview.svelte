@@ -26,7 +26,7 @@
       {/if}
       {#if message.embeds}
         {#each message.embeds as embed}
-          <discord-embed embed-title={embed.title} color={`#${embed.color.toString(16).padStart(6, `0`)}`}>
+          <discord-embed embed-title={embed.title} color={`#${embed.color?.toString(16).padStart(6, `0`)}`}>
             {#if embed.description}
               <discord-embed-description slot="description">
                 {embed.description}
