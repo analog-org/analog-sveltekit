@@ -12,7 +12,7 @@
     superForm,
   } from "sveltekit-superforms";
 
-  export let message: SuperValidated<Infer<MessageSchema>>;
+  export let message: Infer<MessageSchema>;
 </script>
 
 <div class="z-0">
