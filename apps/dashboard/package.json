@@ -41,6 +41,7 @@
 		"@skyra/discord-components-core": "^4.0.0-alpha.18",
 		"@tailwindcss/postcss": "^4.1.6",
 		"@tailwindcss/typography": "^0.5.16",
+		"@tailwindcss/vite": "^4.1.6",
 		"bits-ui": "^1.4.8",
 		"clsx": "^2.1.1",
 		"cmdk-sv": "^0.0.19",
