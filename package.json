@@ -13,18 +13,19 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "discord-api-types": "^0.37.77",
-    "eslint-config-custom": "*",
     "config-custom": "*",
+    "discord-api-types": "^0.38.5",
+    "eslint-config-custom": "*",
     "prettier": "latest",
-    "turbo": "1.13.0"
+    "turbo": "2.5.3"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "packageManager": "npm@8.19.2",
+  "packageManager": "npm@11.3.0",
   "dependencies": {
-    "dotenv-cli": "^7.4.1",
-    "prisma": "^5.11.0"
+    "dotenv-cli": "^8.0.0",
+    "my-turborepo": "file:",
+    "prisma": "^6.7.0"
   }
 }
